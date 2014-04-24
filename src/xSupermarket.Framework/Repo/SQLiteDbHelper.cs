@@ -8,7 +8,7 @@ using System.Text;
 
 namespace xSupermarket.Framework.Repo
 {
-    internal sealed class DbHelper
+    internal sealed class SQLiteDbHelper
     {
         public static string ConnectionString = ConfigurationManager.ConnectionStrings["SQLiteConnectionString"].ConnectionString;
 

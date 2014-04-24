@@ -8,11 +8,11 @@ namespace xSupermarket.Framework.Model
     public class Marketbasket : IModel
     {
         public const string ID = "Marketbasket.Id";
-        public const string PRODUCTS = "Marketbasket.Products";
+        public const string PRODUCTS = "Marketbasket.Product";
 
         public string Id { get; set; }
 
-        public IList<Product> Products { get; set; }
+        public Product Product { get; set; }
 
         public object GetValue(string fieldName)
         {
@@ -21,7 +21,7 @@ namespace xSupermarket.Framework.Model
                 case ID:
                     return this.Id;
                 case PRODUCTS:
-                    return this.Products;
+                    return this.Product;
                 default:
                     return null;
             }

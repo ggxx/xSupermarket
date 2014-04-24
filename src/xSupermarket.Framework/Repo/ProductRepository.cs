@@ -12,7 +12,7 @@ namespace xSupermarket.Framework.Repo
     public class ProductRepository : AbstractRepository<Product>
     {
         private static readonly string SELECT = "select * from Product";
-        private static readonly string DELETE = "delete from Product where Name = :Name";
+        private static readonly string DELETE = "delete from Product";
         private static readonly string INSERT = "insert into Product(Category, Cost, Name, Price, ProductArea, Sales, Section) values(:Category, :Cost, :Name, :Price, :ProductArea, :Sales, :Section)";
         private static readonly string UPDATE = "update Product set Category=:Category, Cost=:Cost, Price=:Price, ProductArea=:ProductArea, Sales=:Sales, Section=:Section where Name = :Name";
 
@@ -40,14 +40,6 @@ namespace xSupermarket.Framework.Repo
                 new SQLiteParameter("ProductArea", model.ProductArea.Id),
                 new SQLiteParameter("Sales", model.Sales),
                 new SQLiteParameter("Section", model.Section.Id)
-            };
-        }
-
-        protected override SQLiteParameter[] GetDeleteSqlParameters(Product model)
-        {
-            return new SQLiteParameter[]
-            {
-                new SQLiteParameter("Name", model.Name)        
             };
         }
 

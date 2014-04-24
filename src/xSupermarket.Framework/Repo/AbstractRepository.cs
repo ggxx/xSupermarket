@@ -15,10 +15,10 @@ namespace xSupermarket.Framework.Repo
         {
         }
 
-        public IResult<T> Find()
+        public virtual IResult<T> Find()
         {
             IList<T> list = new List<T>();
-            using (SQLiteDataReader dr = DbHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text, GetSelectSql()))
+            using (SQLiteDataReader dr = SQLiteDbHelper.ExecuteReader(SQLiteDbHelper.ConnectionString, CommandType.Text, GetSelectSql()))
             {
                 while (dr.Read())
                 {
@@ -28,7 +28,7 @@ namespace xSupermarket.Framework.Repo
             return new Result<T>(list);
         }
 
-        public IResult<T> Find(ICriterion criterion)
+        public virtual IResult<T> Find(ICriterion criterion)
         {
             if (criterion == null)
             {
@@ -43,7 +43,7 @@ namespace xSupermarket.Framework.Repo
             }
 
             IList<T> list = new List<T>();
-            using (SQLiteDataReader dr = DbHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text, sql))
+            using (SQLiteDataReader dr = SQLiteDbHelper.ExecuteReader(SQLiteDbHelper.ConnectionString, CommandType.Text, sql))
             {
                 while (dr.Read())
                 {
@@ -53,26 +53,36 @@ namespace xSupermarket.Framework.Repo
             return new Result<T>(list);
         }
 
-        public void Insert(T model)
+        public virtual void Insert(T model)
         {
             SQLiteParameter[] pars = GetInsertSqlParameters(model);
-            DbHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text, GetInsertSql(), pars);
+            SQLiteDbHelper.ExecuteNonQuery(SQLiteDbHelper.ConnectionString, CommandType.Text, GetInsertSql(), pars);
         }
 
-        public void Update(T model)
+        public virtual void Update(T model)
         {
             SQLiteParameter[] pars = GetUpdateSqlParameters(model);
-            DbHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text, GetUpdateSql(), pars);
+            SQLiteDbHelper.ExecuteNonQuery(SQLiteDbHelper.ConnectionString, CommandType.Text, GetUpdateSql(), pars);
         }
 
-        public void Delete(T model)
+        public virtual void Delete(ICriterion criterion)
         {
-            SQLiteParameter[] pars = GetDeleteSqlParameters(model);
-            DbHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text, GetDeleteSql(), pars);
+            if (criterion == null)
+            {
+                return;
+            }
+
+            string sql = GetDeleteSql();
+            string whereClause = criterion.ToWhereClause();
+            if (!string.IsNullOrWhiteSpace(whereClause))
+            {
+                sql = sql + " where " + whereClause;
+            }
+
+            SQLiteDbHelper.ExecuteNonQuery(SQLiteDbHelper.ConnectionString, CommandType.Text, sql);
         }
 
         protected abstract SQLiteParameter[] GetUpdateSqlParameters(T model);
-        protected abstract SQLiteParameter[] GetDeleteSqlParameters(T model);
         protected abstract SQLiteParameter[] GetInsertSqlParameters(T model);
         protected abstract T CreateModel(SQLiteDataReader dr);
         protected abstract string GetSelectSql();

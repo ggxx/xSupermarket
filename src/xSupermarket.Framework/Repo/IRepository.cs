@@ -13,6 +13,6 @@ namespace xSupermarket.Framework.Repo
         IResult<T> Find(ICriterion criterion);
         void Insert(T model);
         void Update(T model);
-        void Delete(T model);
+        void Delete(ICriterion criterion);
     }
 }
