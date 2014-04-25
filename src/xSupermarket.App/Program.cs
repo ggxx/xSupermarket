@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DevExpress.LookAndFeel;
+using DevExpress.Skins;
+using DevExpress.UserSkins;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,7 +18,16 @@ namespace xSupermarket.App
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            string AppTheme = "DevExpress Style";
+
+            BonusSkins.Register();
+            SkinManager.EnableFormSkins();
+            SkinManager.EnableFormSkinsIfNotVista();
+            SkinManager.EnableMdiFormSkins();
+            UserLookAndFeel.Default.SetSkinStyle(AppTheme);
+            
+            Application.Run(new MainForm());
         }
     }
 }

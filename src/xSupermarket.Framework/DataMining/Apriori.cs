@@ -81,21 +81,20 @@ namespace xSupermarket.Framework.DataMining
             }
 
             //剪枝
-            SubDic(dic);
+            FilterDic(dic);
             List<ItemsKey> newKeys = GetNextLevelItemsKeys(dic);
 
             //继续轮询
             while (newKeys.Count > 0)
             {
                 //先保存一遍结果
-                results = new Dictionary<List<string>, int>();
+                results.Clear();
                 foreach (KeyValuePair<ItemsKey, int> kvp in dic)
                 {
                     results.Add(kvp.Key.Keys, kvp.Value);
                 }
 
-                //处理
-                dic = new Dictionary<ItemsKey, int>();
+                dic.Clear();
                 foreach (KeyValuePair<string, List<string>> kvp in data)
                 {
                     foreach (ItemsKey newKey in newKeys)
@@ -120,8 +119,7 @@ namespace xSupermarket.Framework.DataMining
                     }
                 }
 
-                //剪枝
-                SubDic(dic);
+                FilterDic(dic);
                 newKeys = GetNextLevelItemsKeys(dic);
             }
 
@@ -129,8 +127,11 @@ namespace xSupermarket.Framework.DataMining
         }
 
 
-
-        private void SubDic(Dictionary<ItemsKey, int> dic)
+        /// <summary>
+        /// 过滤掉小于最小支持度的项目
+        /// </summary>
+        /// <param name="dic"></param>
+        private void FilterDic(Dictionary<ItemsKey, int> dic)
         {
             List<ItemsKey> toDeleteItems = new List<ItemsKey>();
             foreach (KeyValuePair<ItemsKey, int> kvp in dic)
@@ -146,18 +147,23 @@ namespace xSupermarket.Framework.DataMining
             }
         }
 
+        /// <summary>
+        /// 计算笛卡尔积，获取下一级项目列表
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
         private List<ItemsKey> GetNextLevelItemsKeys(Dictionary<ItemsKey, int> keys)
         {
-            List<ItemsKey> list = new List<ItemsKey>();
+            List<ItemsKey> oldKeys = new List<ItemsKey>();
             foreach (KeyValuePair<ItemsKey, int> kvp in keys)
             {
-                list.Add(kvp.Key);
+                oldKeys.Add(kvp.Key);
             }
 
             List<ItemsKey> newKeys = new List<ItemsKey>();
-            foreach (ItemsKey k1 in list)
+            foreach (ItemsKey k1 in oldKeys)
             {
-                foreach (ItemsKey k2 in list)
+                foreach (ItemsKey k2 in oldKeys)
                 {
                     if (!k1.Equals(k2))
                     {
@@ -170,7 +176,52 @@ namespace xSupermarket.Framework.DataMining
                     }
                 }
             }
+
+            SubKeys(newKeys, oldKeys);
+
             return newKeys;
+        }
+
+        /// <summary>
+        /// 剪枝
+        /// </summary>
+        /// <param name="newKeys"></param>
+        /// <param name="oldKeys"></param>
+        private void SubKeys(List<ItemsKey> newKeys, List<ItemsKey> oldKeys)
+        {
+            List<ItemsKey> toDeleteList = new List<ItemsKey>();
+            foreach (ItemsKey newKey in newKeys)
+            {
+                List<ItemsKey> newChildKeys = GetChildItemKeys(newKey);
+                foreach (ItemsKey newChildKey in newChildKeys)
+                {
+                    if (!oldKeys.Contains(newChildKey))
+                    {
+                        toDeleteList.Add(newKey);
+                        break;
+                    }
+                }
+            }
+
+            foreach (ItemsKey key in toDeleteList)
+            {
+                newKeys.Remove(key);
+            }
+        }
+
+        /// <summary>
+        /// 获取包含的子项目列表。比如输入{I1,I2,I3}，返回值为{I1,I2}{I1,I3}{I2,I3}
+        /// </summary>
+        /// <param name="newKey"></param>
+        /// <returns></returns>
+        private List<ItemsKey> GetChildItemKeys(ItemsKey key)
+        {
+            List<ItemsKey> list = new List<ItemsKey>();
+            foreach (string item in key.Keys)
+            {
+                list.Add(key.SubFromClone(item));
+            }
+            return list;
         }
 
 
@@ -206,6 +257,13 @@ namespace xSupermarket.Framework.DataMining
                 }
             }
 
+            internal ItemsKey SubFromClone(string key)
+            {
+                ItemsKey newKey = new ItemsKey(this.Keys);
+                newKey.Keys.Remove(key);
+                return newKey;
+            }
+
             internal bool IsIn(List<string> items)
             {
                 foreach (string key in this.Keys)
@@ -217,6 +275,7 @@ namespace xSupermarket.Framework.DataMining
                 }
                 return true;
             }
+
 
             public override bool Equals(object obj)
             {
