@@ -5,7 +5,7 @@ using System.Text;
 
 namespace xSupermarket.Framework.DSL
 {
-    public class GroupKey : IComparable
+    public class GroupKey
     {
         public object[] Keys { get; private set; }
 
@@ -59,11 +59,6 @@ namespace xSupermarket.Framework.DSL
                 hashCode += key.GetHashCode();
             }
             return hashCode;
-        }
-
-        public int CompareTo(object obj)
-        {
-            return -1;
         }
     }
 }

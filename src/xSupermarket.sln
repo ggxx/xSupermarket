@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xSupermarket.Framework", "x
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xSupermarket.Test", "xSupermarket.Test\xSupermarket.Test.csproj", "{ADF02136-CEB7-4B5C-A28E-1463B8E5BE23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xSupermarket.App", "xSupermarket.App\xSupermarket.App.csproj", "{A2C6C6B1-082A-48D3-BD3D-1E8030D2E00A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{ADF02136-CEB7-4B5C-A28E-1463B8E5BE23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADF02136-CEB7-4B5C-A28E-1463B8E5BE23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADF02136-CEB7-4B5C-A28E-1463B8E5BE23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2C6C6B1-082A-48D3-BD3D-1E8030D2E00A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2C6C6B1-082A-48D3-BD3D-1E8030D2E00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2C6C6B1-082A-48D3-BD3D-1E8030D2E00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2C6C6B1-082A-48D3-BD3D-1E8030D2E00A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

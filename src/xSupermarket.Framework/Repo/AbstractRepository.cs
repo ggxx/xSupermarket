@@ -15,7 +15,7 @@ namespace xSupermarket.Framework.Repo
         {
         }
 
-        public virtual IResult<T> Find()
+        public IResult<T> Find()
         {
             IList<T> list = new List<T>();
             using (SQLiteDataReader dr = SQLiteDbHelper.ExecuteReader(SQLiteDbHelper.ConnectionString, CommandType.Text, GetSelectSql()))
@@ -28,7 +28,7 @@ namespace xSupermarket.Framework.Repo
             return new Result<T>(list);
         }
 
-        public virtual IResult<T> Find(ICriterion criterion)
+        public IResult<T> Find(ICriterion criterion)
         {
             if (criterion == null)
             {
@@ -53,19 +53,19 @@ namespace xSupermarket.Framework.Repo
             return new Result<T>(list);
         }
 
-        public virtual void Insert(T model)
+        public void Insert(T model)
         {
             SQLiteParameter[] pars = GetInsertSqlParameters(model);
             SQLiteDbHelper.ExecuteNonQuery(SQLiteDbHelper.ConnectionString, CommandType.Text, GetInsertSql(), pars);
         }
 
-        public virtual void Update(T model)
+        public void Update(T model)
         {
             SQLiteParameter[] pars = GetUpdateSqlParameters(model);
             SQLiteDbHelper.ExecuteNonQuery(SQLiteDbHelper.ConnectionString, CommandType.Text, GetUpdateSql(), pars);
         }
 
-        public virtual void Delete(ICriterion criterion)
+        public void Delete(ICriterion criterion)
         {
             if (criterion == null)
             {

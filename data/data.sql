@@ -25,14 +25,3 @@ insert into ProductArea(Id, Name) values('BJ','BJ');
 insert into ProductArea(Id, Name) values('SH','SH');
 
 commit;
-
-
-
-
-
-
-
-
-
-
-
