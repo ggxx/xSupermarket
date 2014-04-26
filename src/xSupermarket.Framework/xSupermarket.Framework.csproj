@@ -52,8 +52,41 @@
     <Compile Include="DSL\Desc.cs" />
     <Compile Include="DSL\GroupKey.cs" />
     <Compile Include="DSL\GroupRecord.cs" />
+    <Compile Include="ExDSL\AbstractSequenceCombinator.cs" />
+    <Compile Include="ExDSL\AscDesc.cs" />
+    <Compile Include="ExDSL\Combinator.cs" />
+    <Compile Include="ExDSL\CombinatorResult.cs" />
+    <Compile Include="ExDSL\Criterion.cs" />
+    <Compile Include="ExDSL\CriterionBlock.cs" />
+    <Compile Include="ExDSL\CriterionList.cs" />
+    <Compile Include="ExDSL\CriterionList2.cs" />
+    <Compile Include="ExDSL\CriterionWithLR.cs" />
+    <Compile Include="ExDSL\CriterionWithoutLR.cs" />
     <Compile Include="ExDSL\ExDSLGenerator.cs" />
     <Compile Include="ExDSL\ExDSLParser.cs" />
+    <Compile Include="ExDSL\Group.cs" />
+    <Compile Include="ExDSL\GroupBlock.cs" />
+    <Compile Include="ExDSL\GroupList.cs" />
+    <Compile Include="ExDSL\KeywordBlock.cs" />
+    <Compile Include="ExDSL\MatchValue.cs" />
+    <Compile Include="ExDSL\ListCombinator.cs" />
+    <Compile Include="ExDSL\OneListCombinator.cs" />
+    <Compile Include="ExDSL\Operation.cs" />
+    <Compile Include="ExDSL\OptionalSequenceCombinator.cs" />
+    <Compile Include="ExDSL\OrCombinator.cs" />
+    <Compile Include="ExDSL\Order.cs" />
+    <Compile Include="ExDSL\OrderBlock.cs" />
+    <Compile Include="ExDSL\OrderList.cs" />
+    <Compile Include="ExDSL\Relationship.cs" />
+    <Compile Include="ExDSL\SelectBlock.cs" />
+    <Compile Include="ExDSL\SelectObject.cs" />
+    <Compile Include="ExDSL\TokenType.cs" />
+    <Compile Include="ExDSL\SelectDsl.cs" />
+    <Compile Include="ExDSL\SelectParser.cs" />
+    <Compile Include="ExDSL\TabBlock.cs" />
+    <Compile Include="ExDSL\TerminalParser.cs" />
+    <Compile Include="ExDSL\Token.cs" />
+    <Compile Include="ExDSL\TokenBuffer.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\IModel.cs" />
@@ -79,7 +112,9 @@
     <Compile Include="Repo\SectionRepository.cs" />
     <Compile Include="Repo\TypeHelper.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ExDSL\grammar.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,0 +1,20 @@
+﻿grammar file...
+
+order : IDENTIFIER
+orderList : (order)+
+ascDesc : ASC | DESC
+orderBlock : (ascDesc LEFT orderList RIGHT)? 
+group : IDENTIFIER
+groupList : (group)+
+groupBlock : (GROUP LEFT groupList RIGHT)?
+operation : >= | > | = | < | <= | <>
+criterionWithoutLR : IDENTIFIER operation IDENTIFIER
+criterionWithLR : LEFT criterionWithoutLR RIGHT
+criterion : criterionWithLR | criterionWithoutLR
+relationship : AND | OR
+criterionList2 : (relationship criterion)*
+criterionList : criterion criterionList2
+criterionBlock : (LEFT criterionList RIGHT)?
+tabBlock : IDENTIFIER  //PRODUCT | SECTION | CATEGORY | EMPLOYEE | 
+selectBlock : SELECT
+selectDsl : selectBlock tabBlock criterionBlock groupBlock orderBlock

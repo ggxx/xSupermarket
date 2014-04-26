@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace xSupermarket.Framework.DSL
 {
@@ -41,6 +38,14 @@ namespace xSupermarket.Framework.DSL
                     return "=";
                 case Operator.NotEqual:
                     return "<>";
+                case Operator.Larger:
+                    return ">";
+                case Operator.Less:
+                    return "<";
+                case Operator.NotLarger:
+                    return "<=";
+                case Operator.NotLess:
+                    return ">=";
                 default:
                     throw new InvalidCastException("Error Operator!");
             }
@@ -50,6 +55,10 @@ namespace xSupermarket.Framework.DSL
     public enum Operator
     {
         Equal,
-        NotEqual
+        NotEqual,
+        NotLess,
+        Larger,
+        NotLarger,
+        Less
     }
 }
