@@ -6,7 +6,7 @@ using xSupermarket.Framework.Repo;
 
 namespace xSupermarket.Framework.Model
 {
-    public interface IModel
+    public interface IModel : IComparable
     {
         object GetValue(string fieldName);
     }

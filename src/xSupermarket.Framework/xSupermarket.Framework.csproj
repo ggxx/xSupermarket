@@ -47,8 +47,11 @@
     <Compile Include="DataMining\Apriori.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DSL\Asc.cs" />
     <Compile Include="DSL\CriterionPair.cs" />
+    <Compile Include="DSL\Desc.cs" />
     <Compile Include="DSL\GroupKey.cs" />
+    <Compile Include="DSL\GroupRecord.cs" />
     <Compile Include="ExDSL\ExDSLGenerator.cs" />
     <Compile Include="ExDSL\ExDSLParser.cs" />
     <Compile Include="Model\Category.cs" />

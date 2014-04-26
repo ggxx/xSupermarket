@@ -25,5 +25,30 @@ namespace xSupermarket.Framework.Model
                     return null;
             }
         }
+        public override string ToString()
+        {
+            return this.Name;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Category)
+            {
+                Category k = obj as Category;
+                return k.GetHashCode() == this.GetHashCode();
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
+        }
+
+
+        public int CompareTo(object obj)
+        {
+            return this.Name.CompareTo((obj as Category).Name);
+        }
     }
 }

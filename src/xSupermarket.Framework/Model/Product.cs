@@ -45,5 +45,10 @@ namespace xSupermarket.Framework.Model
                     return null;
             }
         }
+
+        public int CompareTo(object obj)
+        {
+            return this.Name.CompareTo((obj as Product).Name);
+        }
     }
 }

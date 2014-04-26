@@ -8,24 +8,22 @@ namespace xSupermarket.Framework.DSL
 {
     public class GroupResult<T> : IGroupResult<T> where T : IModel
     {
-        private IDictionary<GroupKey, IResult<T>> groupingResult;
+        private IList<GroupRecord<T>> groupingResult;
+        private IList<T> list = new List<T>();
 
-        public GroupResult(IDictionary<GroupKey, IResult<T>> r)
+        public GroupResult(IList<GroupRecord<T>> records)
         {
-            this.groupingResult = r;
-        }
-
-        public IList<T> GetResultList()
-        {
-            List<T> result = new List<T>();
-            foreach (KeyValuePair<GroupKey, IResult<T>> kvp in this.groupingResult)
+            this.groupingResult = records;
+            foreach (GroupRecord<T> gr in this.groupingResult)
             {
-                result.AddRange(kvp.Value.GetResultList());
+                foreach (T t in gr.GruopValue.List())
+                {
+                    list.Add(t);
+                }
             }
-            return result;
         }
 
-        public IDictionary<GroupKey, IResult<T>> GetGroupingResult()
+        public IList<GroupRecord<T>> ListGroupingResult()
         {
             return this.groupingResult;
         }
@@ -44,33 +42,43 @@ namespace xSupermarket.Framework.DSL
             else if (fields != null && fields.Length == 1)
             {
                 string cKey = fields[0];
-                IDictionary<GroupKey, IResult<T>> r = new Dictionary<GroupKey, IResult<T>>();
-                foreach (KeyValuePair<GroupKey, IResult<T>> kvp in this.groupingResult)
+                IList<GroupRecord<T>> newRecords = new List<GroupRecord<T>>();
+                foreach (GroupRecord<T> record in this.groupingResult)
                 {
-                    foreach (T t in kvp.Value.GetResultList())
+                    IGroupResult<T> tmp = record.GruopValue.GroupBy(cKey);
+                    foreach (GroupRecord<T> gr in tmp.ListGroupingResult())
                     {
-                        if (r.ContainsKey(new GroupKey(kvp.Key.Keys, t.GetValue(cKey))))
-                        {
-                            IResult<T> val;
-                            if (r.TryGetValue(new GroupKey(kvp.Key.Keys, t.GetValue(cKey)), out val))
-                            {
-                                val.GetResultList().Add(t);
-                            }
-                        }
-                        else
-                        {
-                            IResult<T> val = new Result<T>(new List<T>());
-                            val.GetResultList().Add(t);
-                            r.Add(new GroupKey(kvp.Key.Keys, t.GetValue(cKey)), val);
-                        }
+                        GroupRecord<T> newRecord = new GroupRecord<T>();
+                        newRecord.GroupKey = new GroupKey(record.GroupKey.Keys, gr.GroupKey.Keys);
+                        newRecord.GruopValue = gr.GruopValue;
+                        newRecords.Add(newRecord);
                     }
                 }
-                return new GroupResult<T>(r);
+                return new GroupResult<T>(newRecords);
             }
             else
             {
                 return null;
             }
+        }
+
+        public IList<T> List()
+        {
+            return list;
+        }
+
+        public IResult<T> AscOrderBy(params string[] fields)
+        {
+            string[] orderBy = fields.Select<string, string>(x => x.Split('.')[1]).ToArray();
+            ((List<T>)list).Sort(Asc<T>.By(orderBy));
+            return this;
+        }
+
+        public IResult<T> DescOrderBy(params string[] fields)
+        {
+            string[] orderBy = fields.Select<string, string>(x => x.Split('.')[1]).ToArray();
+            ((List<T>)list).Sort(Desc<T>.By(orderBy));
+            return this;
         }
     }
 }

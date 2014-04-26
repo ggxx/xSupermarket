@@ -15,26 +15,22 @@ namespace xSupermarket.Framework.DSL
             this.list = list;
         }
 
-        public IList<T> GetResultList()
+        public IList<T> List()
         {
             return list;
         }
 
         public IResult<T> AscOrderBy(params string[] fields)
         {
-            for (int i = fields.Length - 1; i >= 0; i--)
-            {
-                ((List<T>)list).Sort((x, y) => x.GetValue(fields[i]).ToString().CompareTo(y.GetValue(fields[i]).ToString()));
-            }
+            string[] orderBy = fields.Select<string, string>(x => x.Split('.')[1]).ToArray();
+            ((List<T>)list).Sort(Asc<T>.By(orderBy));
             return this;
         }
 
         public IResult<T> DescOrderBy(params string[] fields)
         {
-            for (int i = fields.Length - 1; i >= 0; i--)
-            {
-                ((List<T>)list).Sort((x, y) => y.GetValue(fields[i]).ToString().CompareTo(x.GetValue(fields[i]).ToString()));
-            }
+            string[] orderBy = fields.Select<string, string>(x => x.Split('.')[1]).ToArray();
+            ((List<T>)list).Sort(Desc<T>.By(orderBy));
             return this;
         }
 
@@ -52,25 +48,24 @@ namespace xSupermarket.Framework.DSL
             else if (fields != null && fields.Length == 1)
             {
                 string cKey = fields[0];
-                IDictionary<GroupKey, IResult<T>> r = new Dictionary<GroupKey, IResult<T>>();
+                IList<GroupRecord<T>> records = new List<GroupRecord<T>>();
                 foreach (T t in this.list)
                 {
-                    if (r.ContainsKey(new GroupKey(t.GetValue(cKey))))
+                    GroupKey groupKey = new GroupKey(t.GetValue(cKey));
+                    GroupRecord<T> groupingRecord = records.Count > 0 ? records.SingleOrDefault(x => x.GroupKey.Equals(groupKey)) : null;
+
+                    if (groupingRecord != null)
                     {
-                        IResult<T> val;
-                        if (r.TryGetValue(new GroupKey(t.GetValue(cKey)), out val))
-                        {
-                            val.GetResultList().Add(t);
-                        }
+                        groupingRecord.GruopValue.List().Add(t);
                     }
                     else
                     {
                         IResult<T> val = new Result<T>(new List<T>());
-                        val.GetResultList().Add(t);
-                        r.Add(new GroupKey(t.GetValue(cKey)), val);
+                        val.List().Add(t);
+                        records.Add(new GroupRecord<T>() { GroupKey = groupKey, GruopValue = val });
                     }
                 }
-                return new GroupResult<T>(r);
+                return new GroupResult<T>(records);
             }
             else
             {

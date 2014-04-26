@@ -6,10 +6,8 @@ using xSupermarket.Framework.Model;
 
 namespace xSupermarket.Framework.DSL
 {
-    public interface IGroupResult<T>  where T : IModel
+    public interface IGroupResult<T> : IResult<T>  where T : IModel
     {
-        IDictionary<GroupKey, IResult<T>> GetGroupingResult();
-
-        IGroupResult<T> GroupBy(params string[] fields);
+        IList<GroupRecord<T>> ListGroupingResult();
     }
 }

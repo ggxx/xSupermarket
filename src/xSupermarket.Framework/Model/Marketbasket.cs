@@ -26,5 +26,10 @@ namespace xSupermarket.Framework.Model
                     return null;
             }
         }
+
+        public int CompareTo(object obj)
+        {
+            return this.Id.CompareTo((obj as Marketbasket).Id);
+        }
     }
 }
