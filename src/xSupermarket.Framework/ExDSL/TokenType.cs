@@ -24,7 +24,6 @@ namespace xSupermarket.Framework.ExDSL
         TT_LARGER,
         TT_NOTLARGER,
         TT_LESS,
-        TT_NOTLESS,
-        UNKNOWN
+        TT_NOTLESS
     }
 }

@@ -32,7 +32,7 @@ namespace xSupermarket.Framework.ExDSL
             return tokenMatch == GetTokenType(this.TokenValue);
         }
 
-        private static TokenType GetTokenType(string text)
+        public static TokenType GetTokenType(string text)
         {
             switch (text)
             {
@@ -71,7 +71,7 @@ namespace xSupermarket.Framework.ExDSL
                 case KW_NOTLESS:
                     return TokenType.TT_NOTLESS;
                 default:
-                    return TokenType.UNKNOWN;
+                    return TokenType.TT_IDENTIFIER;
             }
         }
     }

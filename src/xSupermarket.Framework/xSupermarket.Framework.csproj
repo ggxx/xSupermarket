@@ -64,6 +64,7 @@
     <Compile Include="ExDSL\CriterionWithoutLR.cs" />
     <Compile Include="ExDSL\ExDSLGenerator.cs" />
     <Compile Include="ExDSL\ExDSLParser.cs" />
+    <Compile Include="ExDSL\ExSelectObject.cs" />
     <Compile Include="ExDSL\Group.cs" />
     <Compile Include="ExDSL\GroupBlock.cs" />
     <Compile Include="ExDSL\GroupList.cs" />
@@ -79,10 +80,9 @@
     <Compile Include="ExDSL\OrderList.cs" />
     <Compile Include="ExDSL\Relationship.cs" />
     <Compile Include="ExDSL\SelectBlock.cs" />
-    <Compile Include="ExDSL\SelectObject.cs" />
+    <Compile Include="DSL\SelectObject.cs" />
     <Compile Include="ExDSL\TokenType.cs" />
     <Compile Include="ExDSL\SelectDsl.cs" />
-    <Compile Include="ExDSL\SelectParser.cs" />
     <Compile Include="ExDSL\TabBlock.cs" />
     <Compile Include="ExDSL\TerminalParser.cs" />
     <Compile Include="ExDSL\Token.cs" />

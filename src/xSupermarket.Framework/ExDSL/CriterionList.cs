@@ -1,27 +1,49 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace xSupermarket.Framework.ExDSL
 {
     public class CriterionList : Combinator
     {
         private Combinator matchCriterion;
-        private Combinator matchCriterionList2;
 
-        public CriterionList(Combinator matchCriterion, Combinator matchCriterionList2)
+        public CriterionList(Combinator matchCriterion)
         {
             // TODO: Complete member initialization
             this.matchCriterion = matchCriterion;
-            this.matchCriterionList2 = matchCriterionList2;
         }
 
         public override CombinatorResult Recognizer(CombinatorResult inbound)
         {
-            throw new NotImplementedException();
+            if (!inbound.MatchStatus)
+            {
+                return inbound;
+            }
+
+            IList<MatchValue> matchValues = new List<MatchValue>();
+            CombinatorResult result = matchCriterion.Recognizer(inbound); ;
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                result = matchCriterionList2.Recognizer(result);
+            }
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                Action(matchValues.ToArray());
+            }
+            else
+            {
+                result = new CombinatorResult(inbound.TokenBuffer, false, new MatchValue(string.Empty));
+            }
+
+            return result;
         }
 
         public override void Action(params MatchValue[] matchValues)
         {
-            throw new NotImplementedException();
+            // do nothing
         }
     }
 }

@@ -3,9 +3,14 @@ namespace xSupermarket.Framework.ExDSL
 {
     public class ExDSLGenerator
     {
-        public ExDSLGenerator(TokenBuffer buffer)
-        {
+        private TokenBuffer tokenBuffer;
+        private Combinator matchSelectDsl;
+        private Combinator matchInsertDsl;
 
+
+        public ExDSLGenerator(ExDSLParser parser)
+        {
+            this.tokenBuffer = new TokenBuffer(parser.Tokens);
 
             //Termianl Symbols
             Combinator matchIdentifierKeyword = new TerminalParser(TokenType.TT_IDENTIFIER);
@@ -33,22 +38,30 @@ namespace xSupermarket.Framework.ExDSL
             Combinator matchGroupList = new GroupList(matchGroup);
             Combinator matchGroupBlock = new GroupBlock(matchGroupKeyword, matchLeftKeyword, matchGroupList, matchRightKeyword);
             Combinator matchOperation = new Operation(matchEqualKeyword, matchNotEqualKeyword, matchLessKeyword, matchLargerKeyword, matchNotLessKeyword, matchNotLargerKeyword);
-            Combinator matchCriterionWithoutLR = new CriterionWithoutLR(matchIdentifierKeyword, matchOperation, matchIdentifierKeyword);
-            Combinator matchCriterionWithLR = new CriterionWithLR(matchLeftKeyword, matchCriterionWithoutLR, matchRightKeyword);
-            Combinator matchRelationship = new Relationship(matchAndKeyword, matchOrKeyword);
-            Combinator matchCriterion = new Criterion(matchCriterionWithLR, matchCriterionWithoutLR);
-            Combinator matchCriterionList2 = new CriterionList2(matchRelationship, matchCriterion);
-            Combinator matchCriterionList = new CriterionList(matchCriterion, matchCriterionList2);
+            Combinator matchCriterion= new CriterionWithoutLR(matchIdentifierKeyword, matchOperation, matchIdentifierKeyword);
+            Combinator matchCriterionList = new CriterionList(matchCriterion);
             Combinator matchCriterionBlock = new CriterionBlock(matchLeftKeyword, matchCriterionList, matchRightKeyword);
             Combinator matchTabBlock = new TabBlock(TokenType.TT_IDENTIFIER);
             Combinator matchSelectBlock = new SelectBlock(matchSekectKeyword);
-            Combinator matchSelectDsl = new SelectDsl(matchSelectBlock, matchTabBlock, matchCriterionBlock, matchGroupBlock, matchOrderBlock);
+            matchSelectDsl = new SelectDsl(matchSelectBlock, matchTabBlock, matchCriterionBlock, matchGroupBlock, matchOrderBlock);
+        }
 
-
-            CombinatorResult selectResult = matchSelectDsl.Recognizer(new CombinatorResult(buffer, true, new MatchValue(string.Empty)));
-            if (selectResult.MatchStatus)
+        public object Gen()
+        {
+            bool match = false;
+            switch (Token.GetTokenType(tokenBuffer.NextToken().TokenValue))
             {
-                    
+                case TokenType.TT_SELECT:
+                    CombinatorResult selectResult = matchSelectDsl.Recognizer(new CombinatorResult(tokenBuffer, true, new MatchValue(string.Empty)));
+                    match = selectResult.MatchStatus;
+                    if (match)
+                        return ExSelectObject.SelectObject;
+                    else
+                        return null;
+                case TokenType.TT_INSERT:
+                    return null;
+                default:
+                    return null;
             }
         }
     }

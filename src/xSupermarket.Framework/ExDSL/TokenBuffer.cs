@@ -19,7 +19,7 @@ namespace xSupermarket.Framework.ExDSL
         public List<Token> MakePoppedTokenList()
         {
             Token[] array = new Token[tokens.Count - 1];
-            tokens.CopyTo(0, array, 1, tokens.Count - 1);
+            tokens.CopyTo(1, array, 0, tokens.Count - 1);
             return array.ToList();
         }
 
