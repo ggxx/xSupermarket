@@ -10,9 +10,9 @@ namespace xSupermarket.Framework.ExDSL
 
         public CriterionList(Combinator matchCriterion)
         {
-            // TODO: Complete member initialization
             this.matchCriterion = matchCriterion;
         }
+
 
         public override CombinatorResult Recognizer(CombinatorResult inbound)
         {
@@ -21,17 +21,20 @@ namespace xSupermarket.Framework.ExDSL
                 return inbound;
             }
 
-            IList<MatchValue> matchValues = new List<MatchValue>();
-            CombinatorResult result = matchCriterion.Recognizer(inbound); ;
-            if (result.MatchStatus)
+            List<MatchValue> matchValues = new List<MatchValue>();
+            CombinatorResult result = inbound;
+
+            result = matchCriterion.Recognizer(result);
+            while (result.MatchStatus)
             {
                 matchValues.Add(result.MatchValue);
-                result = matchCriterionList2.Recognizer(result);
+                result = matchCriterion.Recognizer(result);
             }
-            if (result.MatchStatus)
+
+            if (matchValues.Count > 0)
             {
-                matchValues.Add(result.MatchValue);
                 Action(matchValues.ToArray());
+                result = new CombinatorResult(result.TokenBuffer, true, new MatchValue(string.Empty));
             }
             else
             {

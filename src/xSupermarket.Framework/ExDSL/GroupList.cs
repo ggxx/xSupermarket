@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace xSupermarket.Framework.ExDSL
 {
@@ -8,18 +9,42 @@ namespace xSupermarket.Framework.ExDSL
 
         public GroupList(Combinator matchGroup)
         {
-            // TODO: Complete member initialization
             this.matchGroup = matchGroup;
         }
 
         public override CombinatorResult Recognizer(CombinatorResult inbound)
         {
-            throw new NotImplementedException();
+            if (!inbound.MatchStatus)
+            {
+                return inbound;
+            }
+
+            List<MatchValue> matchValues = new List<MatchValue>();
+            CombinatorResult result = inbound;
+
+            result = matchGroup.Recognizer(result);
+            while (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                result = matchGroup.Recognizer(result);
+            }
+
+            if (matchValues.Count > 0)
+            {
+                Action(matchValues.ToArray());
+                result = new CombinatorResult(result.TokenBuffer, true, new MatchValue(string.Empty));
+            }
+            else
+            {
+                result = new CombinatorResult(inbound.TokenBuffer, false, new MatchValue(string.Empty));
+            }
+
+            return result;
         }
 
         public override void Action(params MatchValue[] matchValues)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

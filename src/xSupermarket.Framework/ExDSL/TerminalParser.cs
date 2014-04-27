@@ -37,7 +37,7 @@ namespace xSupermarket.Framework.ExDSL
 
         public override void Action(params MatchValue[] matchValues)
         {
-            //Debug.Assert(matchValues.Length == 1);
+            Debug.Assert(matchValues.Length == 1);
 
             switch (tokenMatch)
             {

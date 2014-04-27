@@ -3,6 +3,7 @@ namespace xSupermarket.Framework.Model
 {
     public class Category : IModel
     {
+        public const string TABLE = "Category";
         public const string ID = "Category.Id";
         public const string NAME = "Category.Name";
 

@@ -1,26 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace xSupermarket.Framework.ExDSL
 {
-    public class SelectDsl : Combinator
+    public class GroupContext : Combinator
     {
-        //private SelectResult selectResult;
-        private Combinator matchSelectBlock;
-        private Combinator matchTabBlock;
-        private Combinator matchCriterionBlock;
-        private Combinator matchGroupBlock;
-        private Combinator matchOrderBlock;
+        private Combinator matchGroupKeyword;
+        private Combinator matchLeftKeyword;
+        private Combinator matchGroupList;
+        private Combinator matchRightKeyword;
 
-        public SelectDsl(Combinator matchSelectBlock, Combinator matchTabBlock, Combinator matchCriterionBlock, Combinator matchGroupBlock, Combinator matchOrderBlock)
+        public GroupContext(Combinator matchGroupKeyword, Combinator matchLeftKeyword, Combinator matchGroupList, Combinator matchRightKeyword)
         {
-            this.matchSelectBlock = matchSelectBlock;
-            this.matchTabBlock = matchTabBlock;
-            this.matchCriterionBlock = matchCriterionBlock;
-            this.matchGroupBlock = matchGroupBlock;
-            this.matchOrderBlock = matchOrderBlock;
+            this.matchGroupKeyword = matchGroupKeyword;
+            this.matchLeftKeyword = matchLeftKeyword;
+            this.matchGroupList = matchGroupList;
+            this.matchRightKeyword = matchRightKeyword;
         }
-
         public override CombinatorResult Recognizer(CombinatorResult inbound)
         {
             if (!inbound.MatchStatus)
@@ -31,27 +29,21 @@ namespace xSupermarket.Framework.ExDSL
             CombinatorResult result = inbound;
             IList<MatchValue> matchValues = new List<MatchValue>();
 
-
-            result = matchSelectBlock.Recognizer(result);
+            result = matchGroupKeyword.Recognizer(result);
             if (result.MatchStatus)
             {
                 matchValues.Add(result.MatchValue);
-                result = matchTabBlock.Recognizer(result);
+                result = matchLeftKeyword.Recognizer(result);
             }
             if (result.MatchStatus)
             {
                 matchValues.Add(result.MatchValue);
-                result = matchCriterionBlock.Recognizer(result);
+                result = matchGroupList.Recognizer(result);
             }
             if (result.MatchStatus)
             {
                 matchValues.Add(result.MatchValue);
-                result = matchGroupBlock.Recognizer(result);
-            }
-            if (result.MatchStatus)
-            {
-                matchValues.Add(result.MatchValue);
-                result = matchOrderBlock.Recognizer(result);
+                result = matchRightKeyword.Recognizer(result);
             }
             if (result.MatchStatus)
             {

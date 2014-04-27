@@ -1,30 +1,44 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace xSupermarket.Framework.ExDSL
 {
     public class GroupBlock : Combinator
     {
-        private Combinator matchGroupKeyword;
-        private Combinator matchLeftKeyword;
-        private Combinator matchGroupList;
-        private Combinator matchRightKeyword;
+        private Combinator matchGroupContext;
 
-        public GroupBlock(Combinator matchGroupKeyword, Combinator matchLeftKeyword, Combinator matchGroupList, Combinator matchRightKeyword)
+
+        public GroupBlock(Combinator matchGroupContext)
         {
-            // TODO: Complete member initialization
-            this.matchGroupKeyword = matchGroupKeyword;
-            this.matchLeftKeyword = matchLeftKeyword;
-            this.matchGroupList = matchGroupList;
-            this.matchRightKeyword = matchRightKeyword;
+            this.matchGroupContext = matchGroupContext;
         }
+
         public override CombinatorResult Recognizer(CombinatorResult inbound)
         {
-            throw new NotImplementedException();
+            if (!inbound.MatchStatus)
+            {
+                return inbound;
+            }
+
+            List<MatchValue> matchValues = new List<MatchValue>();
+            CombinatorResult result = inbound;
+            result = matchGroupContext.Recognizer(result);
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                Action(matchValues.ToArray());
+            }
+            else
+            {
+                result = new CombinatorResult(inbound.TokenBuffer, false, new MatchValue(string.Empty));
+            }
+
+            return result;
         }
 
         public override void Action(params MatchValue[] matchValues)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

@@ -13,10 +13,10 @@ namespace xSupermarket.Framework.ExDSL
 
         private void CreateTokens(string input)
         {
-            Tokens.Clear();
+            Tokens = new List<Token>();
             string formatInput;
             formatInput = input.Trim().Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("(", " ( ").Replace(")", " ) ").Replace(">", " > ").Replace("<", " < ").Replace("=", " = ");
-            while (input.Contains("  "))
+            while (formatInput.Contains("  "))
             {
                 formatInput = formatInput.Replace("  ", " ");
             }

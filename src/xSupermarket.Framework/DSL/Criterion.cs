@@ -30,7 +30,7 @@ namespace xSupermarket.Framework.DSL
             return string.Format(" {0} {1} {2} ", field, ConvertToString(oper), value is String ? string.Format("'{0}'", value) : value);
         }
 
-        private string ConvertToString(Operator oper)
+        public static string ConvertToString(Operator oper)
         {
             switch (oper)
             {
@@ -46,6 +46,27 @@ namespace xSupermarket.Framework.DSL
                     return "<=";
                 case Operator.NotLess:
                     return ">=";
+                default:
+                    throw new InvalidCastException("Error Operator!");
+            }
+        }
+
+        public static Operator ConvertToOperator(string oper)
+        {
+            switch (oper)
+            {
+                case "=":
+                    return Operator.Equal;
+                case "<>":
+                    return Operator.NotEqual;
+                case ">":
+                    return Operator.Larger;
+                case "<":
+                    return Operator.Less;
+                case "<=":
+                    return Operator.NotLarger;
+                case ">=":
+                    return Operator.NotLess;
                 default:
                     throw new InvalidCastException("Error Operator!");
             }

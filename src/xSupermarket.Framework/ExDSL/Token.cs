@@ -20,6 +20,9 @@ namespace xSupermarket.Framework.ExDSL
         const string KW_NOTLARGER = "<=";
         const string KW_LESS = "<";
         const string KW_NOTLESS = ">=";
+        const string KW_GROUP = "GROUP";
+        const string KW_ASC = "ASC";
+        const string KW_DESC = "DESC";
 
         public Token(string value)
         {
@@ -70,6 +73,12 @@ namespace xSupermarket.Framework.ExDSL
                     return TokenType.TT_LESS;
                 case KW_NOTLESS:
                     return TokenType.TT_NOTLESS;
+                case KW_GROUP:
+                    return TokenType.TT_GROUP;
+                case KW_ASC:
+                    return TokenType.TT_ASC;
+                case KW_DESC:
+                    return TokenType.TT_DESC;
                 default:
                     return TokenType.TT_IDENTIFIER;
             }

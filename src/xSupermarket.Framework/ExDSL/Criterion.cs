@@ -1,26 +1,60 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace xSupermarket.Framework.ExDSL
 {
     public class Criterion : Combinator
     {
-        private Combinator matchCriterionWithLR;
-        private Combinator matchCriterionWithoutLR;
+        private Combinator matchOperation;
+        private Combinator matchIdentifierKeyword1;
+        private Combinator matchIdentifierKeyword2;
 
-        public Criterion(Combinator matchCriterionWithLR, Combinator matchCriterionWithoutLR)
+
+        public Criterion(Combinator matchIdentifierKeyword1, Combinator matchOperation, Combinator matchIdentifierKeyword2)
         {
-            // TODO: Complete member initialization
-            this.matchCriterionWithLR = matchCriterionWithLR;
-            this.matchCriterionWithoutLR = matchCriterionWithoutLR;
+            this.matchIdentifierKeyword1 = matchIdentifierKeyword1;
+            this.matchOperation = matchOperation;
+            this.matchIdentifierKeyword2 = matchIdentifierKeyword2;
         }
+
         public override CombinatorResult Recognizer(CombinatorResult inbound)
         {
-            throw new NotImplementedException();
+            if (!inbound.MatchStatus)
+            {
+                return inbound;
+            }
+
+            CombinatorResult result = inbound;
+            List<MatchValue> matchValues = new List<MatchValue>();
+
+            result = matchIdentifierKeyword1.Recognizer(result);
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                result = matchOperation.Recognizer(result);
+            }
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                result = matchIdentifierKeyword2.Recognizer(result);
+            }
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                Action(matchValues.ToArray());
+            }
+            else
+            {
+                result = new CombinatorResult(inbound.TokenBuffer, false, new MatchValue(string.Empty));
+            }
+
+            return result;
         }
 
         public override void Action(params MatchValue[] matchValues)
         {
-            throw new NotImplementedException();
+            DSL.ICriterion ic = new DSL.Criterion(matchValues[0].MatchString, DSL.Criterion.ConvertToOperator(matchValues[1].MatchString), matchValues[2].MatchString);
+            ExSelectObject.SelectObject.Criterions.Add(ic);
         }
     }
 }

@@ -1,37 +1,19 @@
 ﻿grammar file...
 
 order : IDENTIFIER
-orderList : (order)+
+orderList : (order)*
 ascDesc : ASC | DESC
-orderBlock : (ascDesc LEFT orderList RIGHT)? 
+orderContext : ascDesc LEFT orderList RIGHT
+orderBlock : (orderContext)? 
 group : IDENTIFIER
-groupList : (group)+
-groupBlock : (GROUP LEFT groupList RIGHT)?
+groupList : (group)*
+groupContext : GROUP LEFT groupList RIGHT
+groupBlock : (groupContext)?
 operation : >= | > | = | < | <= | <>
 criterion : IDENTIFIER operation IDENTIFIER
-criterionList : (criterion)+ 
-criterionBlock : (LEFT criterionList RIGHT)?
-tabBlock : IDENTIFIER  //PRODUCT | SECTION | CATEGORY | EMPLOYEE | 
-selectBlock : SELECT
-selectDsl : selectBlock tabBlock criterionBlock groupBlock orderBlock
-
-
-
-order : IDENTIFIER
-orderList : (order)+
-ascDesc : ASC | DESC
-orderBlock : (ascDesc LEFT orderList RIGHT)? 
-group : IDENTIFIER
-groupList : (group)+
-groupBlock : (GROUP LEFT groupList RIGHT)?
-operation : >= | > | = | < | <= | <>
-criterionWithoutLR : IDENTIFIER operation IDENTIFIER
-criterionWithLR : LEFT criterionWithoutLR RIGHT
-criterion : criterionWithLR | criterionWithoutLR
-relationship : AND | OR
-criterionList2 : (relationship criterion)*
-criterionList : criterion criterionList2
-criterionBlock : (LEFT criterionList RIGHT)?
+criterionList : (criterion)* 
+criterionContext: LEFT criterionList RIGHT
+criterionBlock : (criterionContext)?
 tabBlock : IDENTIFIER  //PRODUCT | SECTION | CATEGORY | EMPLOYEE | 
 selectBlock : SELECT
 selectDsl : selectBlock tabBlock criterionBlock groupBlock orderBlock

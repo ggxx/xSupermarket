@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace xSupermarket.Framework.ExDSL
 {
-    public class CriterionList2 : Combinator
+    public class CriterionContext : Combinator
     {
-        private Combinator matchRelationship;
-        private Combinator matchCriterion;
+        private Combinator matchLeftKeyword;
+        private Combinator matchCriterionList;
+        private Combinator matchRightKeyword;
 
-        public CriterionList2(Combinator matchRelationship, Combinator matchCriterion)
+        public CriterionContext(Combinator matchLeftKeyword, Combinator matchCriterionList, Combinator matchRightKeyword)
         {
-            this.matchRelationship = matchRelationship;
-            this.matchCriterion = matchCriterion;
+            this.matchLeftKeyword = matchLeftKeyword;
+            this.matchCriterionList = matchCriterionList;
+            this.matchRightKeyword = matchRightKeyword;
         }
         public override CombinatorResult Recognizer(CombinatorResult inbound)
         {
@@ -21,20 +24,23 @@ namespace xSupermarket.Framework.ExDSL
                 return inbound;
             }
 
-            IList<MatchValue> matchValues = new List<MatchValue>();
             CombinatorResult result = inbound;
-            result = matchRelationship.Recognizer(result);
+            IList<MatchValue> matchValues = new List<MatchValue>();
+
+            result = matchLeftKeyword.Recognizer(result);
             if (result.MatchStatus)
             {
                 matchValues.Add(result.MatchValue);
-                result = matchCriterion.Recognizer(result);
-            }
-            else
-            {
-                result = new CombinatorResult(inbound.TokenBuffer, true, new MatchValue(string.Empty));
+                result = matchCriterionList.Recognizer(result);
             }
             if (result.MatchStatus)
             {
+                matchValues.Add(result.MatchValue);
+                result = matchRightKeyword.Recognizer(result);
+            }
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
                 Action(matchValues.ToArray());
             }
             else
@@ -47,7 +53,7 @@ namespace xSupermarket.Framework.ExDSL
 
         public override void Action(params MatchValue[] matchValues)
         {
-
+            
         }
     }
 }

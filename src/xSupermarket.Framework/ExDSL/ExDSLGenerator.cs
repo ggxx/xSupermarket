@@ -33,14 +33,17 @@ namespace xSupermarket.Framework.ExDSL
             Combinator matchOrder = new Order(TokenType.TT_IDENTIFIER);
             Combinator matchOrderList = new OrderList(matchOrder);
             Combinator matchAscDesc = new AscDesc(matchAscKeyword, matchDescKeyword);
-            Combinator matchOrderBlock = new OrderBlock(matchAscDesc, matchLeftKeyword, matchOrderList, matchRightKeyword);
+            Combinator matchOrderContext = new OrderContext(matchAscDesc, matchLeftKeyword, matchOrderList, matchRightKeyword);
+            Combinator matchOrderBlock = new OrderBlock(matchOrderContext);
             Combinator matchGroup = new Group(TokenType.TT_IDENTIFIER);
             Combinator matchGroupList = new GroupList(matchGroup);
-            Combinator matchGroupBlock = new GroupBlock(matchGroupKeyword, matchLeftKeyword, matchGroupList, matchRightKeyword);
+            Combinator matchGroupContext = new GroupContext(matchGroupKeyword, matchLeftKeyword, matchGroupList, matchRightKeyword);
+            Combinator matchGroupBlock = new GroupBlock(matchGroupContext);
             Combinator matchOperation = new Operation(matchEqualKeyword, matchNotEqualKeyword, matchLessKeyword, matchLargerKeyword, matchNotLessKeyword, matchNotLargerKeyword);
-            Combinator matchCriterion= new CriterionWithoutLR(matchIdentifierKeyword, matchOperation, matchIdentifierKeyword);
+            Combinator matchCriterion = new Criterion(matchIdentifierKeyword, matchOperation, matchIdentifierKeyword);
             Combinator matchCriterionList = new CriterionList(matchCriterion);
-            Combinator matchCriterionBlock = new CriterionBlock(matchLeftKeyword, matchCriterionList, matchRightKeyword);
+            Combinator matchCriterionContext = new CriterionContext(matchLeftKeyword, matchCriterionList, matchRightKeyword);
+            Combinator matchCriterionBlock = new CriterionBlock(matchCriterionContext);
             Combinator matchTabBlock = new TabBlock(TokenType.TT_IDENTIFIER);
             Combinator matchSelectBlock = new SelectBlock(matchSekectKeyword);
             matchSelectDsl = new SelectDsl(matchSelectBlock, matchTabBlock, matchCriterionBlock, matchGroupBlock, matchOrderBlock);
@@ -48,6 +51,7 @@ namespace xSupermarket.Framework.ExDSL
 
         public object Gen()
         {
+            ExSelectObject.Reset();
             bool match = false;
             switch (Token.GetTokenType(tokenBuffer.NextToken().TokenValue))
             {

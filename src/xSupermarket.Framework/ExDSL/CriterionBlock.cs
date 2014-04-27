@@ -5,15 +5,12 @@ namespace xSupermarket.Framework.ExDSL
 {
     public class CriterionBlock : Combinator
     {
-        private Combinator matchLeftKeyword;
-        private Combinator matchCriterionList;
-        private Combinator matchRightKeyword;
+        private Combinator matchCriterionContext;
 
-        public CriterionBlock(Combinator matchLeftKeyword, Combinator matchCriterionList, Combinator matchRightKeyword)
+
+        public CriterionBlock(Combinator matchCriterionContext)
         {
-            this.matchLeftKeyword = matchLeftKeyword;
-            this.matchCriterionList = matchCriterionList;
-            this.matchRightKeyword = matchRightKeyword;
+            this.matchCriterionContext = matchCriterionContext;
         }
         public override CombinatorResult Recognizer(CombinatorResult inbound)
         {
@@ -25,35 +22,16 @@ namespace xSupermarket.Framework.ExDSL
             CombinatorResult result = inbound;
             IList<MatchValue> matchValues = new List<MatchValue>();
 
+            result = matchCriterionContext.Recognizer(result);
             if (result.MatchStatus)
             {
-                result = matchLeftKeyword.Recognizer(result);
                 matchValues.Add(result.MatchValue);
-            }
-            if (result.MatchStatus)
-            {
-                result = matchCriterionList.Recognizer(result);
-                matchValues.Add(result.MatchValue);
-            }
-            else
-            {
-                // match nothing
-                return new CombinatorResult(inbound.TokenBuffer, true, new MatchValue(string.Empty));
-            }
-            if (result.MatchStatus)
-            {
-                result = matchRightKeyword.Recognizer(result);
-                matchValues.Add(result.MatchValue);
-            }
-
-            if (result.MatchStatus)
-            {
-                // matched
                 Action(matchValues.ToArray());
             }
             else
             {
-                result = new CombinatorResult(inbound.TokenBuffer, false, new MatchValue(string.Empty));
+                // no Block
+                result = new CombinatorResult(inbound.TokenBuffer, true, new MatchValue(string.Empty));
             }
 
             return result;
