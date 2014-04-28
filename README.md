@@ -13,7 +13,7 @@ Homework of Domain-Specific Language Course
 <?xml version="1.0" encoding="utf-8" ?>  
 <configuration>  
   <connectionStrings>  
-<add name="SQLiteConnectionString" providerName="System.Data.SQLite.SQLiteConnection" connectionString="Data Source={YOUR_DB_FILE};Version=3;"/>  
+    <add name="SQLiteConnectionString" providerName="System.Data.SQLite.SQLiteConnection" connectionString="Data Source={YOUR_DB_FILE};Version=3;"/>  
   </connectionStrings>  
 </configuration>  
 ```  
