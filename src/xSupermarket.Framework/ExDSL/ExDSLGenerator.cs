@@ -133,10 +133,7 @@ namespace xSupermarket.Framework.ExDSL
                         return ExObject.SuppObject;
                     else
                         return null;
-
-
                 default:
-
                     return null;
             }
         }

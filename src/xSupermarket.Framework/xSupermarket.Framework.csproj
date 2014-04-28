@@ -35,7 +35,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.91.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Program Files\System.Data.SQLite\2010\bin\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\System.Data.SQLite\2010_64\bin\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,6 +52,7 @@
     <Compile Include="DSL\CriterionPair.cs" />
     <Compile Include="DSL\DeleteObject.cs" />
     <Compile Include="DSL\Desc.cs" />
+    <Compile Include="DSL\DslObject.cs" />
     <Compile Include="DSL\GroupKey.cs" />
     <Compile Include="DSL\GroupRecord.cs" />
     <Compile Include="DSL\InsertObject.cs" />
@@ -129,9 +130,6 @@
     <Compile Include="DSL\Result.cs" />
     <Compile Include="Repo\SectionRepository.cs" />
     <Compile Include="Repo\TypeHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ExDSL\grammar.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

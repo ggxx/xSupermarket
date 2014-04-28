@@ -27,7 +27,7 @@ namespace xSupermarket.Framework.ExDSL
             TokenBuffer tokens = inbound.TokenBuffer;
             Token t = tokens.NextToken();
 
-            if (t.IsTokenType(tokenType))
+            if (t != null && t.IsTokenType(tokenType))
             {
                 TokenBuffer outTokens = new TokenBuffer(tokens.MakePoppedTokenList());
                 result = new CombinatorResult(outTokens, true, new MatchValue(t.TokenValue));
@@ -44,7 +44,7 @@ namespace xSupermarket.Framework.ExDSL
         public void Action(params MatchValue[] matchValues)
         {
             Debug.Assert(matchValues.Length == 1);
-            ExObject.TopObject.Number = int.Parse(matchValues[0].MatchString);
+            ExObject.TopObject.MinSupport = int.Parse(matchValues[0].MatchString);
         }
     }
 }

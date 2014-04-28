@@ -7,16 +7,16 @@ using xSupermarket.Framework.Repo;
 
 namespace xSupermarket.Framework.DSL
 {
-    public class TopObject
+    public class TopObject : DslObject
     {
         public TopObject()
         {
-            this.Number = 5;
+            this.MinSupport = 55;
             this.Table = string.Empty;
         }
 
         public string Table { get; set; }
-        public int Number { get; set; }
+        public int MinSupport { get; set; }
 
         public Dictionary<List<string>, int> GetResult()
         {
@@ -41,8 +41,49 @@ namespace xSupermarket.Framework.DSL
                 }
             }
 
-            DataMining.Apriori ap = new DataMining.Apriori(data, 55);
+            DataMining.Apriori ap = new DataMining.Apriori(data, MinSupport);
             return ap.GetResults();
+        }
+
+        public string GetOutput()
+        {
+            StringBuilder sb = new StringBuilder(string.Empty);
+            List<int> values = new List<int>();
+            List<List<string>> keys = new List<List<string>>();
+            Dictionary<List<string>, int> result = GetResult();
+            foreach (KeyValuePair<List<string>, int> kvp in result)
+            {
+                keys.Add(kvp.Key);
+                values.Add(kvp.Value);
+            }
+
+            while (keys.Count > 0)
+            {
+                int index = 0;
+                int max = 0;
+                for (int i = 0; i < keys.Count; i++)
+                {
+                    if (values[i] > max)
+                    {
+                        index = i;
+                        max = values[i];
+                    }
+                }
+
+                foreach (string key in keys[index])
+                {
+                    sb.Append(key);
+                    sb.Append(", ");
+                }
+                sb.Append(values[index]);
+                sb.AppendLine();
+
+
+                keys.RemoveAt(index);
+                values.RemoveAt(index);
+            }
+
+            return sb.ToString();
         }
     }
 }

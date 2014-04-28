@@ -47,7 +47,7 @@ namespace xSupermarket.Framework.ExDSL
 
         public void Action(params MatchValue[] matchValues)
         {
-            StringBuilder sb = new StringBuilder("");
+            StringBuilder sb = new StringBuilder(string.Empty);
             foreach (MatchValue matchValue in matchValues)
             {
                 sb.Append(matchValue.MatchString);

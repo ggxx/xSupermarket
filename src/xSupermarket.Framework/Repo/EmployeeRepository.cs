@@ -7,7 +7,7 @@ namespace xSupermarket.Framework.Repo
     {
         private static readonly string SELECT = "select * from Employee";
         private static readonly string DELETE = "delete from Employee";
-        private static readonly string INSERT = "insert into Employee(Id, Name, ) values(:Id, :Name)";
+        private static readonly string INSERT = "insert into Employee(Id, Name) values(:Id, :Name)";
         private static readonly string UPDATE = "update Employee set Name=:Name where Id = :Id";
 
         protected override SQLiteParameter[] GetUpdateSqlParameters(Employee model)
@@ -35,7 +35,7 @@ namespace xSupermarket.Framework.Repo
             Employee employee = new Employee();
             employee.Sex = TypeHelper.ToString(dr["Sex"]) == "M" ? Sex.M : Sex.F;
             employee.Name = TypeHelper.ToString(dr["Name"]);
-            employee.Section = new Section() { Id = TypeHelper.ToString(dr["Id"]), Name = TypeHelper.ToString(dr["name"]) };
+            employee.Section = new Section() { Id = TypeHelper.ToString(dr["Section"]), Name = TypeHelper.ToString(dr["Section"]) };
             return employee;
         }
 

@@ -47,5 +47,10 @@ namespace xSupermarket.Framework.Model
         {
             return this.Name.CompareTo((obj as Product).Name);
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

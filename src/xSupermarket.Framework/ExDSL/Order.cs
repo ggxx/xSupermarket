@@ -22,7 +22,7 @@ namespace xSupermarket.Framework.ExDSL
             TokenBuffer tokens = inbound.TokenBuffer;
             Token t = tokens.NextToken();
 
-            if (t.IsTokenType(tokenType))
+            if (t != null && t.IsTokenType(tokenType))
             {
                 TokenBuffer outTokens = new TokenBuffer(tokens.MakePoppedTokenList());
                 result = new CombinatorResult(outTokens, true, new MatchValue(t.TokenValue));

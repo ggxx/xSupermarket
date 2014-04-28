@@ -30,7 +30,8 @@ namespace xSupermarket.Framework.ExDSL
             }
             else
             {
-                result = new CombinatorResult(inbound.TokenBuffer, false, new MatchValue(string.Empty));
+                // match nothing is allowed
+                result = new CombinatorResult(inbound.TokenBuffer, true, new MatchValue(string.Empty));
             }
 
             return result;

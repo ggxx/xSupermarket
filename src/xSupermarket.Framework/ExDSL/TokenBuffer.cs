@@ -13,19 +13,36 @@ namespace xSupermarket.Framework.ExDSL
         }
         public Token NextToken()
         {
-            return tokens[0];
+            if (tokens.Count > 0)
+            {
+                return tokens[0];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public List<Token> MakePoppedTokenList()
         {
-            Token[] array = new Token[tokens.Count - 1];
-            tokens.CopyTo(1, array, 0, tokens.Count - 1);
-            return array.ToList();
+            if (tokens.Count > 1)
+            {
+                Token[] array = new Token[tokens.Count - 1];
+                tokens.CopyTo(1, array, 0, tokens.Count - 1);
+                return array.ToList();
+            }
+            else
+            {
+                return new List<Token>();
+            }
         }
 
         public void PopToken()
         {
-            tokens.RemoveAt(0);
+            if (tokens.Count > 0)
+            {
+                tokens.RemoveAt(0);
+            }
         }
     }
 }

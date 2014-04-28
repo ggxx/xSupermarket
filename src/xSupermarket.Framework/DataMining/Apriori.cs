@@ -13,10 +13,13 @@ namespace xSupermarket.Framework.DataMining
             this.minSupport = minSupport;
         }
 
-        public float GetSupport(List<string> items)
+        public float GetSupport(string item1, string item2)
         {
             int sum = 0;
-            ItemsKey key = new ItemsKey(items);
+            List<string> keys = new List<string>();
+            keys.Add(item1);
+            keys.Add(item2);
+            ItemsKey key = new ItemsKey(keys);
             foreach (KeyValuePair<string, List<string>> kvp in data)
             {
                 if (key.IsIn(kvp.Value))
@@ -27,13 +30,13 @@ namespace xSupermarket.Framework.DataMining
             return (float)sum / (float)data.Count;
         }
 
-        public float GetConfidence(List<string> items1, List<string> items2)
+        public float GetConfidence(string item1, string item2)
         {
             int sum1 = 0;
             int sumAll = 0;
-            ItemsKey key1 = new ItemsKey(items1);
-            ItemsKey keyAll = new ItemsKey(items1);
-            keyAll.Add(items2);
+            ItemsKey key1 = new ItemsKey(item1);
+            ItemsKey keyAll = new ItemsKey(item1);
+            keyAll.Add(item2);
 
             foreach (KeyValuePair<string, List<string>> kvp in data)
             {

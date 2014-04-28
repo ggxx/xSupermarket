@@ -44,12 +44,12 @@ namespace xSupermarket.Framework.DSL
             }
 
             Framework.DataMining.Apriori ap = new Framework.DataMining.Apriori(data, 50);
-            List<string> l1 = new List<string>();
-            List<string> l2 = new List<string>();
-            l1.Add(Name1);
-            l2.Add(Name2);
+            return ap.GetSupport(Name1, Name2);
+        }
 
-            return ap.GetSupport(l1);
+        public string GetOutput()
+        {
+            return GetResult().ToString();
         }
     }
 }
