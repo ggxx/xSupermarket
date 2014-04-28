@@ -4,15 +4,15 @@ namespace xSupermarket.Framework.DSL
 {
     public class Criterion : ICriterion
     {
-        string field;
-        Operator oper;
-        object value;
+        public string Field { get; private set; }
+        public Operator Oper { get; private set; }
+        public object Value { get; private set; }
 
         public Criterion(string field, Operator oper, object value)
         {
-            this.field = field;
-            this.oper = oper;
-            this.value = value;
+            this.Field = field;
+            this.Oper = oper;
+            this.Value = value;
         }
 
         public ICriterion And(ICriterion c2)
@@ -27,7 +27,12 @@ namespace xSupermarket.Framework.DSL
 
         public string ToWhereClause()
         {
-            return string.Format(" {0} {1} {2} ", field, ConvertToString(oper), value is String ? string.Format("'{0}'", value) : value);
+            if (string.IsNullOrWhiteSpace(Field))
+            {
+                return string.Empty;
+            }
+
+            return string.Format(" {0} {1} {2} ", Field, ConvertToString(Oper), Value is String ? string.Format("'{0}'", Value) : Value);
         }
 
         public static string ConvertToString(Operator oper)

@@ -14,20 +14,54 @@ namespace xSupermarket.Framework.ExDSL
 
         public OrderContext(Combinator matchAscDesc, Combinator matchLeftKeyword, Combinator matchOrderList, Combinator matchRightKeyword)
         {
-            // TODO: Complete member initialization
             this.matchAscDesc = matchAscDesc;
             this.matchLeftKeyword = matchLeftKeyword;
             this.matchOrderList = matchOrderList;
             this.matchRightKeyword = matchRightKeyword;
         }
-        public override CombinatorResult Recognizer(CombinatorResult inbound)
+
+        public CombinatorResult Recognizer(CombinatorResult inbound)
         {
-            throw new NotImplementedException();
+            if (!inbound.MatchStatus)
+            {
+                return inbound;
+            }
+
+            CombinatorResult result = inbound;
+            IList<MatchValue> matchValues = new List<MatchValue>();
+
+            result = matchAscDesc.Recognizer(result);
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                result = matchLeftKeyword.Recognizer(result);
+            }
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                result = matchOrderList.Recognizer(result);
+            }
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                result = matchRightKeyword.Recognizer(result);
+            }
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                Action(matchValues.ToArray());
+            }
+            else
+            {
+                result = new CombinatorResult(inbound.TokenBuffer, false, new MatchValue(string.Empty));
+            }
+
+            return result;
         }
 
-        public override void Action(params MatchValue[] matchValues)
+        public void Action(params MatchValue[] matchValues)
         {
-            throw new NotImplementedException();
+            // do nothing
         }
     }
 }

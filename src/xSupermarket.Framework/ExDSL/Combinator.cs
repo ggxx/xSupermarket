@@ -1,12 +1,10 @@
 ﻿
 namespace xSupermarket.Framework.ExDSL
 {
-    public abstract class Combinator
+    public interface Combinator
     {
-        public Combinator() { }
+        CombinatorResult Recognizer(CombinatorResult inbound);
 
-        public abstract CombinatorResult Recognizer(CombinatorResult inbound);
-
-        public abstract void Action(params MatchValue[] matchValues);
+        void Action(params MatchValue[] matchValues);
     }
 }

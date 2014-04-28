@@ -13,7 +13,7 @@ namespace xSupermarket.Framework.ExDSL
             this.matchGroupContext = matchGroupContext;
         }
 
-        public override CombinatorResult Recognizer(CombinatorResult inbound)
+        public CombinatorResult Recognizer(CombinatorResult inbound)
         {
             if (!inbound.MatchStatus)
             {
@@ -36,9 +36,9 @@ namespace xSupermarket.Framework.ExDSL
             return result;
         }
 
-        public override void Action(params MatchValue[] matchValues)
+        public void Action(params MatchValue[] matchValues)
         {
-
+            // do nothing
         }
     }
 }

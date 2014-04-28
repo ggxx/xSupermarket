@@ -11,7 +11,7 @@ namespace xSupermarket.Framework.ExDSL
             this.tokenMatch = match;
         }
 
-        public override CombinatorResult Recognizer(CombinatorResult inbound)
+        public CombinatorResult Recognizer(CombinatorResult inbound)
         {
             if (!inbound.MatchStatus)
             {
@@ -35,7 +35,7 @@ namespace xSupermarket.Framework.ExDSL
             return result;
         }
 
-        public override void Action(params MatchValue[] matchValues)
+        public void Action(params MatchValue[] matchValues)
         {
             Debug.Assert(matchValues.Length == 1);
 

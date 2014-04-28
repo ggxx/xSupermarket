@@ -14,6 +14,38 @@ criterion : IDENTIFIER operation IDENTIFIER
 criterionList : (criterion)* 
 criterionContext: LEFT criterionList RIGHT
 criterionBlock : (criterionContext)?
-tabBlock : IDENTIFIER  //PRODUCT | SECTION | CATEGORY | EMPLOYEE | 
+tabBlock : IDENTIFIER
 selectBlock : SELECT
 selectDsl : selectBlock tabBlock criterionBlock groupBlock orderBlock
+
+updateBlock : UPDATE
+updateDsl : updateBlock tabBlock criterionBlock groupBlock orderBlock
+
+insertBlock : INSERT
+insertDsl : insertBlock tabBlock criterionBlock groupBlock orderBlock
+
+deleteBlock : DELETE
+deleteDsl : deleteBlock tabBlock criterionBlock groupBlock orderBlock
+
+numBlock : IDENTIFIER
+topBlock : TOP
+topDsl : topBlock tabBlock numBlock
+
+name : IDENTIFIER
+nameList1 : (name)+
+nameList2 : (name)+
+nameBlock : LEFT name1 RIGHT LEFT name2 RIGHT
+suppBlock : SUPP
+suppDsl : suppBlock tabBlock nameBlock
+
+confBlock : CONF
+confDsl : confBlock tabBlock nameBlock
+
+
+SELECT TAB(Field=XX) GROUP(Section) Asc(Section)
+INSERT TAB(Name=E Id=E)
+UPDATE TAB(Name=E Id=F)
+DELETE TAB(Cost>1 Cost<100)
+TOP TAB 5
+SUPP TAB (XX) (YY)
+CONF TAB (XX) (YY)

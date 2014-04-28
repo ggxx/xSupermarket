@@ -6,14 +6,14 @@ namespace xSupermarket.Framework.ExDSL
 {
     public class Group : Combinator
     {
-        private TokenType tokenTypes;
+        private TokenType tokenType;
 
-        public Group(TokenType tokenTypes)
+        public Group(TokenType tokenType)
         {
-            this.tokenTypes = tokenTypes;
+            this.tokenType = tokenType;
         }
 
-        public override CombinatorResult Recognizer(CombinatorResult inbound)
+        public CombinatorResult Recognizer(CombinatorResult inbound)
         {
             if (!inbound.MatchStatus)
             {
@@ -24,7 +24,7 @@ namespace xSupermarket.Framework.ExDSL
             TokenBuffer tokens = inbound.TokenBuffer;
             Token t = tokens.NextToken();
 
-            if (t.IsTokenType(tokenTypes))
+            if (t.IsTokenType(tokenType))
             {
                 TokenBuffer outTokens = new TokenBuffer(tokens.MakePoppedTokenList());
                 result = new CombinatorResult(outTokens, true, new MatchValue(t.TokenValue));
@@ -38,10 +38,10 @@ namespace xSupermarket.Framework.ExDSL
             return result;
         }
 
-        public override void Action(params MatchValue[] matchValues)
+        public void Action(params MatchValue[] matchValues)
         {
             Debug.Assert(matchValues.Length == 1);
-            ExSelectObject.SelectObject.GroupFields.Add(matchValues[0].MatchString);
+            ExObject.SelectObject.GroupFields.Add(matchValues[0].MatchString);
         }
     }
 }

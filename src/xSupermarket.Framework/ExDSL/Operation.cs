@@ -22,7 +22,7 @@ namespace xSupermarket.Framework.ExDSL
             this.matchNotLargerKeyword = matchNotLargerKeyword;
         }
 
-        public override CombinatorResult Recognizer(CombinatorResult inbound)
+        public CombinatorResult Recognizer(CombinatorResult inbound)
         {
             if (!inbound.MatchStatus)
             {
@@ -88,7 +88,7 @@ namespace xSupermarket.Framework.ExDSL
             return new CombinatorResult(inbound.TokenBuffer, false, new MatchValue(string.Empty));
         }
 
-        public override void Action(params MatchValue[] matchValues)
+        public void Action(params MatchValue[] matchValues)
         {
             // do nothing
         }

@@ -17,7 +17,7 @@ namespace xSupermarket.Framework.ExDSL
             this.matchIdentifierKeyword2 = matchIdentifierKeyword2;
         }
 
-        public override CombinatorResult Recognizer(CombinatorResult inbound)
+        public CombinatorResult Recognizer(CombinatorResult inbound)
         {
             if (!inbound.MatchStatus)
             {
@@ -51,10 +51,13 @@ namespace xSupermarket.Framework.ExDSL
             return result;
         }
 
-        public override void Action(params MatchValue[] matchValues)
+        public void Action(params MatchValue[] matchValues)
         {
             DSL.ICriterion ic = new DSL.Criterion(matchValues[0].MatchString, DSL.Criterion.ConvertToOperator(matchValues[1].MatchString), matchValues[2].MatchString);
-            ExSelectObject.SelectObject.Criterions.Add(ic);
+            ExObject.SelectObject.Criterions.Add(ic);
+            ExObject.InsertObject.Criterions.Add(ic);
+            ExObject.UpdateObject.Criterions.Add(ic);
+            ExObject.DeleteObject.Criterions.Add(ic);
         }
     }
 }

@@ -5,19 +5,17 @@ using System.Text;
 
 namespace xSupermarket.Framework.ExDSL
 {
-    public class GroupContext : Combinator
+    public class TopDsl : Combinator
     {
-        private Combinator matchGroupKeyword;
-        private Combinator matchLeftKeyword;
-        private Combinator matchGroupList;
-        private Combinator matchRightKeyword;
+        private Combinator matchTopBlock;
+        private Combinator matchTabBlock;
+        private Combinator matchNumBlock;
 
-        public GroupContext(Combinator matchGroupKeyword, Combinator matchLeftKeyword, Combinator matchGroupList, Combinator matchRightKeyword)
+        public TopDsl(Combinator matchTopBlock, Combinator matchTabBlock, Combinator matchNumBlock)
         {
-            this.matchGroupKeyword = matchGroupKeyword;
-            this.matchLeftKeyword = matchLeftKeyword;
-            this.matchGroupList = matchGroupList;
-            this.matchRightKeyword = matchRightKeyword;
+            this.matchTopBlock = matchTopBlock;
+            this.matchTabBlock = matchTabBlock;
+            this.matchNumBlock = matchNumBlock;
         }
         public CombinatorResult Recognizer(CombinatorResult inbound)
         {
@@ -29,21 +27,16 @@ namespace xSupermarket.Framework.ExDSL
             CombinatorResult result = inbound;
             IList<MatchValue> matchValues = new List<MatchValue>();
 
-            result = matchGroupKeyword.Recognizer(result);
+            result = matchTopBlock.Recognizer(result);
             if (result.MatchStatus)
             {
                 matchValues.Add(result.MatchValue);
-                result = matchLeftKeyword.Recognizer(result);
+                result = matchTabBlock.Recognizer(result);
             }
             if (result.MatchStatus)
             {
                 matchValues.Add(result.MatchValue);
-                result = matchGroupList.Recognizer(result);
-            }
-            if (result.MatchStatus)
-            {
-                matchValues.Add(result.MatchValue);
-                result = matchRightKeyword.Recognizer(result);
+                result = matchNumBlock.Recognizer(result);
             }
             if (result.MatchStatus)
             {

@@ -12,7 +12,7 @@ namespace xSupermarket.Framework.ExDSL
             this.matchGroup = matchGroup;
         }
 
-        public override CombinatorResult Recognizer(CombinatorResult inbound)
+        public CombinatorResult Recognizer(CombinatorResult inbound)
         {
             if (!inbound.MatchStatus)
             {
@@ -36,15 +36,16 @@ namespace xSupermarket.Framework.ExDSL
             }
             else
             {
-                result = new CombinatorResult(inbound.TokenBuffer, false, new MatchValue(string.Empty));
+                // match nothing is allowed
+                result = new CombinatorResult(inbound.TokenBuffer, true, new MatchValue(string.Empty));
             }
 
             return result;
         }
 
-        public override void Action(params MatchValue[] matchValues)
+        public void Action(params MatchValue[] matchValues)
         {
-            
+            // do nothing
         }
     }
 }

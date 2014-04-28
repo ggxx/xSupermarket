@@ -1,37 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace xSupermarket.Framework.ExDSL
 {
     public class OrderBlock :Combinator
     {
-        private Combinator matchAscDesc;
-        private Combinator matchLeftKeyword;
-        private Combinator matchOrderList;
-        private Combinator matchRightKeyword;
         private Combinator matchOrderContext;
-
-        public OrderBlock(Combinator matchAscDesc, Combinator matchLeftKeyword, Combinator matchOrderList, Combinator matchRightKeyword)
-        {
-            // TODO: Complete member initialization
-            this.matchAscDesc = matchAscDesc;
-            this.matchLeftKeyword = matchLeftKeyword;
-            this.matchOrderList = matchOrderList;
-            this.matchRightKeyword = matchRightKeyword;
-        }
 
         public OrderBlock(Combinator matchOrderContext)
         {
-            // TODO: Complete member initialization
             this.matchOrderContext = matchOrderContext;
         }
-        public override CombinatorResult Recognizer(CombinatorResult inbound)
+
+        public CombinatorResult Recognizer(CombinatorResult inbound)
         {
-            throw new NotImplementedException();
+            if (!inbound.MatchStatus)
+            {
+                return inbound;
+            }
+
+            List<MatchValue> matchValues = new List<MatchValue>();
+            CombinatorResult result = inbound;
+            result = matchOrderContext.Recognizer(result);
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                Action(matchValues.ToArray());
+            }
+            else
+            {
+                result = new CombinatorResult(inbound.TokenBuffer, false, new MatchValue(string.Empty));
+            }
+
+            return result;
         }
 
-        public override void Action(params MatchValue[] matchValues)
+        public void Action(params MatchValue[] matchValues)
         {
-            throw new NotImplementedException();
+            // do nothing
         }
     }
 }

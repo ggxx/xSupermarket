@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace xSupermarket.Framework.ExDSL
 {
-    public class OrderList : Combinator
+    public class NameList2:Combinator
     {
-        private Combinator matchOrder;
+        private Combinator matchName;
 
-        public OrderList(Combinator matchOrder)
+        public NameList2(Combinator matchName)
         {
-            this.matchOrder = matchOrder;
+            this.matchName = matchName;
         }
 
         public CombinatorResult Recognizer(CombinatorResult inbound)
@@ -22,11 +24,11 @@ namespace xSupermarket.Framework.ExDSL
             List<MatchValue> matchValues = new List<MatchValue>();
             CombinatorResult result = inbound;
 
-            result = matchOrder.Recognizer(result);
+            result = matchName.Recognizer(result);
             while (result.MatchStatus)
             {
                 matchValues.Add(result.MatchValue);
-                result = matchOrder.Recognizer(result);
+                result = matchName.Recognizer(result);
             }
 
             if (matchValues.Count > 0)
@@ -36,8 +38,8 @@ namespace xSupermarket.Framework.ExDSL
             }
             else
             {
-                // match nothing is allowed
-                result = new CombinatorResult(inbound.TokenBuffer, true, new MatchValue(string.Empty));
+                // match nothing is not allowed
+                result = new CombinatorResult(inbound.TokenBuffer, false, new MatchValue(string.Empty));
             }
 
             return result;
@@ -45,7 +47,15 @@ namespace xSupermarket.Framework.ExDSL
 
         public void Action(params MatchValue[] matchValues)
         {
-            // do nothing
+            StringBuilder sb = new StringBuilder("");
+            foreach (MatchValue matchValue in matchValues)
+            {
+                sb.Append(matchValue.MatchString);
+                sb.Append(" ");
+            }
+            string name2 = sb.ToString().Trim();
+            ExObject.SuppObject.Name2 = name2;
+            ExObject.ConfObject.Name2 = name2;
         }
     }
 }

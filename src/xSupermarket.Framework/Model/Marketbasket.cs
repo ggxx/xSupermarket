@@ -3,6 +3,7 @@ namespace xSupermarket.Framework.Model
 {
     public class Marketbasket : IModel
     {
+        public const string TABLE = "Marketbasket";
         public const string ID = "Marketbasket.Id";
         public const string PRODUCTS = "Marketbasket.Product";
 

@@ -5,20 +5,19 @@ using System.Text;
 
 namespace xSupermarket.Framework.ExDSL
 {
-    public class GroupContext : Combinator
+    public class DeleteDsl : Combinator
     {
-        private Combinator matchGroupKeyword;
-        private Combinator matchLeftKeyword;
-        private Combinator matchGroupList;
-        private Combinator matchRightKeyword;
+        private Combinator matchDeleteBlock;
+        private Combinator matchTabBlock;
+        private Combinator matchCriterionBlock;
 
-        public GroupContext(Combinator matchGroupKeyword, Combinator matchLeftKeyword, Combinator matchGroupList, Combinator matchRightKeyword)
+        public DeleteDsl(Combinator matchDeleteBlock, Combinator matchTabBlock, Combinator matchCriterionBlock)
         {
-            this.matchGroupKeyword = matchGroupKeyword;
-            this.matchLeftKeyword = matchLeftKeyword;
-            this.matchGroupList = matchGroupList;
-            this.matchRightKeyword = matchRightKeyword;
+            this.matchDeleteBlock = matchDeleteBlock;
+            this.matchTabBlock = matchTabBlock;
+            this.matchCriterionBlock = matchCriterionBlock;
         }
+
         public CombinatorResult Recognizer(CombinatorResult inbound)
         {
             if (!inbound.MatchStatus)
@@ -29,21 +28,17 @@ namespace xSupermarket.Framework.ExDSL
             CombinatorResult result = inbound;
             IList<MatchValue> matchValues = new List<MatchValue>();
 
-            result = matchGroupKeyword.Recognizer(result);
+
+            result = matchDeleteBlock.Recognizer(result);
             if (result.MatchStatus)
             {
                 matchValues.Add(result.MatchValue);
-                result = matchLeftKeyword.Recognizer(result);
+                result = matchTabBlock.Recognizer(result);
             }
             if (result.MatchStatus)
             {
                 matchValues.Add(result.MatchValue);
-                result = matchGroupList.Recognizer(result);
-            }
-            if (result.MatchStatus)
-            {
-                matchValues.Add(result.MatchValue);
-                result = matchRightKeyword.Recognizer(result);
+                result = matchCriterionBlock.Recognizer(result);
             }
             if (result.MatchStatus)
             {

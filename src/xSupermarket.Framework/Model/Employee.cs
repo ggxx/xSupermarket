@@ -3,6 +3,7 @@ namespace xSupermarket.Framework.Model
 {
     public class Employee : IModel
     {
+        public const string TABLE = "Employee";
         public const string NAME = "Employee.Name";
         public const string SEX = "Employee.Sex";
         public const string SECTION = "Employee.Section";

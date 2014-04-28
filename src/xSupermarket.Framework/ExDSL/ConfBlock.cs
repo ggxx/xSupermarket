@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace xSupermarket.Framework.ExDSL
 {
-    public class SelectBlock : Combinator
+    public class ConfBlock : Combinator
     {
-        private Combinator matchSekectKeyword;
+        private Combinator matchConfKeyword;
 
-        public SelectBlock(Combinator matchSekectKeyword)
+        public ConfBlock(Combinator matchConfKeyword)
         {
-            this.matchSekectKeyword = matchSekectKeyword;
+            this.matchConfKeyword = matchConfKeyword;
         }
-
         public CombinatorResult Recognizer(CombinatorResult inbound)
         {
             CombinatorResult result = inbound;
@@ -19,7 +20,7 @@ namespace xSupermarket.Framework.ExDSL
 
             if (result.MatchStatus)
             {
-                result = matchSekectKeyword.Recognizer(result);
+                result = matchConfKeyword.Recognizer(result);
                 matchValues.Add(result.MatchValue);
                 Action(matchValues.ToArray());
             }

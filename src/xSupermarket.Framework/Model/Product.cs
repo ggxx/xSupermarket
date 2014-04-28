@@ -10,6 +10,7 @@ namespace xSupermarket.Framework.Model
         public const string SECTION = "Product.Section";
         public const string CATEGORY = "Product.Category";
         public const string SALES = "Product.Sales";
+        public const string TABLE = "Product";
 
         public string Name { get; set; }
         public float? Price { get; set; }
