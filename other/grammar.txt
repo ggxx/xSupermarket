@@ -1,5 +1,6 @@
 ﻿grammar file...
 
+endBlock : ;
 order : IDENTIFIER
 orderList : (order)*
 ascDesc : ASC | DESC
@@ -16,36 +17,42 @@ criterionContext: LEFT criterionList RIGHT
 criterionBlock : (criterionContext)?
 tabBlock : IDENTIFIER
 selectBlock : SELECT
-selectDsl : selectBlock tabBlock criterionBlock groupBlock orderBlock
+selectDsl : selectBlock tabBlock criterionBlock groupBlock orderBlock endBlock
 
+
+equal : =
+criterion : IDENTIFIER equal IDENTIFIER
+criterionList2 : (criterion2)+ 
+criterionBlock2 : LEFT criterionList2 RIGHT
 updateBlock : UPDATE
-updateDsl : updateBlock tabBlock criterionBlock groupBlock orderBlock
+updateDsl : updateBlock tabBlock criterionBlock2 endBlock
+
 
 insertBlock : INSERT
-insertDsl : insertBlock tabBlock criterionBlock groupBlock orderBlock
+insertDsl : insertBlock tabBlock criterionBlock2 endBlock
 
 deleteBlock : DELETE
-deleteDsl : deleteBlock tabBlock criterionBlock groupBlock orderBlock
+deleteDsl : deleteBlock tabBlock criterionBlock endBlock
 
 numBlock : IDENTIFIER
 topBlock : TOP
-topDsl : topBlock tabBlock numBlock
+topDsl : topBlock tabBlock numBlock endBlock
 
 name : IDENTIFIER
 nameList1 : (name)+
 nameList2 : (name)+
 nameBlock : LEFT name1 RIGHT LEFT name2 RIGHT
 suppBlock : SUPP
-suppDsl : suppBlock tabBlock nameBlock
+suppDsl : suppBlock tabBlock nameBlock endBlock
 
 confBlock : CONF
-confDsl : confBlock tabBlock nameBlock
+confDsl : confBlock tabBlock nameBlock endBlock
 
 
-SELECT TAB(Field=XX) GROUP(Section) Asc(Section)
-INSERT TAB(Name=E Id=E)
-UPDATE TAB(Name=E Id=F)
-DELETE TAB(Cost>1 Cost<100)
-TOP TAB 5
-SUPP TAB (XX) (YY)
-CONF TAB (XX) (YY)
+SELECT TAB(Field=XX) GROUP(Section) Asc(Section);
+INSERT TAB(Name=E Id=E);
+UPDATE TAB(Name=E Id=F);
+DELETE TAB(Cost>1 Cost<100);
+TOP TAB 5;
+SUPP TAB (XX) (YY);
+CONF TAB (XX) (YY);
