@@ -38,6 +38,7 @@ namespace xSupermarket.Framework.ExDSL
             Combinator matchTopKeyword = new TerminalParser(TokenType.TT_TOP);
             Combinator matchSuppKeyword = new TerminalParser(TokenType.TT_SUPP);
             Combinator matchConfKeyword = new TerminalParser(TokenType.TT_CONF);
+            Combinator matchEndKeyword = new TerminalParser(TokenType.TT_END);
 
             //Non-terminal rules
             Combinator matchOrder = new Order(TokenType.TT_IDENTIFIER);
@@ -51,9 +52,12 @@ namespace xSupermarket.Framework.ExDSL
             Combinator matchGroupBlock = new GroupBlock(matchGroupContext);
             Combinator matchOperation = new Operation(matchEqualKeyword, matchNotEqualKeyword, matchLessKeyword, matchLargerKeyword, matchNotLessKeyword, matchNotLargerKeyword);
             Combinator matchCriterion = new Criterion(matchIdentifierKeyword, matchOperation, matchIdentifierKeyword);
+            Combinator matchCriterion2 = new Criterion2(matchIdentifierKeyword, matchEqualKeyword, matchIdentifierKeyword);
             Combinator matchCriterionList = new CriterionList(matchCriterion);
+            Combinator matchCriterionList2 = new CriterionList2(matchCriterion2);
             Combinator matchCriterionContext = new CriterionContext(matchLeftKeyword, matchCriterionList, matchRightKeyword);
             Combinator matchCriterionBlock = new CriterionBlock(matchCriterionContext);
+            Combinator matchCriterionBlock2 = new CriterionBlock2(matchLeftKeyword, matchCriterionList2, matchRightKeyword);
             Combinator matchTabBlock = new TabBlock(TokenType.TT_IDENTIFIER);
             Combinator matchSelectBlock = new SelectBlock(matchSelectKeyword);
             Combinator matchInsertBlock = new InsertBlock(matchInsertKeyword);
@@ -67,15 +71,16 @@ namespace xSupermarket.Framework.ExDSL
             Combinator matchNameBlock = new NameBlock(matchLeftKeyword, matchNameList1, matchRightKeyword, matchLeftKeyword, matchNameList2, matchRightKeyword);
             Combinator matchSuppBlock = new SuppBlock(matchSuppKeyword);
             Combinator matchConfBlock = new ConfBlock(matchConfKeyword);
+            Combinator matchEndBlock = new EndBlock(matchEndKeyword);
 
             // Entry Point
-            matchSelectDsl = new SelectDsl(matchSelectBlock, matchTabBlock, matchCriterionBlock, matchGroupBlock, matchOrderBlock);
-            matchInsertDsl = new InsertDsl(matchInsertBlock, matchTabBlock, matchCriterionBlock);
-            matchUpdateDsl = new UpdateDsl(matchUpdateBlock, matchTabBlock, matchCriterionBlock);
-            matchDeleteDsl = new DeleteDsl(matchDeleteBlock, matchTabBlock, matchCriterionBlock);
-            matchTopDsl = new TopDsl(matchTopBlock, matchTabBlock, matchNumBlock);
-            matchSuppDsl = new SuppDsl(matchSuppBlock, matchTabBlock, matchNameBlock);
-            matchConfDsl = new ConfDsl(matchConfBlock, matchTabBlock, matchNameBlock);
+            matchSelectDsl = new SelectDsl(matchSelectBlock, matchTabBlock, matchCriterionBlock, matchGroupBlock, matchOrderBlock, matchEndBlock);
+            matchInsertDsl = new InsertDsl(matchInsertBlock, matchTabBlock, matchCriterionBlock2, matchEndBlock);
+            matchUpdateDsl = new UpdateDsl(matchUpdateBlock, matchTabBlock, matchCriterionBlock2, matchEndBlock);
+            matchDeleteDsl = new DeleteDsl(matchDeleteBlock, matchTabBlock, matchCriterionBlock, matchEndBlock);
+            matchTopDsl = new TopDsl(matchTopBlock, matchTabBlock, matchNumBlock, matchEndBlock);
+            matchSuppDsl = new SuppDsl(matchSuppBlock, matchTabBlock, matchNameBlock, matchEndBlock);
+            matchConfDsl = new ConfDsl(matchConfBlock, matchTabBlock, matchNameBlock, matchEndBlock);
         }
 
         public object Gen()

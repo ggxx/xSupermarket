@@ -53,10 +53,12 @@ namespace xSupermarket.Framework.DSL
             {
                 result = repo.Find();
             }
+
             if (this.GroupFields.Count > 0)
             {
                 result = result.GroupBy(this.GroupFields.Select(x => string.Format("{0}.{1}", this.Table, x)).ToArray());
             }
+
             if (this.isAsc && this.AscFields.Count > 0)
             {
                 result = result.AscOrderBy(this.AscFields.Select(x => string.Format("{0}.{1}", this.Table, x)).ToArray());

@@ -34,7 +34,7 @@ namespace xSupermarket.Framework.DSL
             }
             properties = list.ToArray();
         }
-        public virtual int Compare(T x, T y)
+        public int Compare(T x, T y)
         {
             return Compare(x, y, 0);
         }

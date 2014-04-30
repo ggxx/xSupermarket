@@ -12,7 +12,6 @@ namespace xSupermarket.Framework.ExDSL
 
         public NumBlock(TokenType tokenType)
         {
-            // TODO: Complete member initialization
             this.tokenType = tokenType;
         }
 

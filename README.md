@@ -22,34 +22,34 @@ Homework of Domain-Specific Language Course
 
 ## Some External DSL Example
 - select * from Product where Section = 'A' group by ProductArea;  
-```
-SELECT Product(Section=A) GROUP(ProductArea) 
+```  
+SELECT Product(Section=A) GROUP(ProductArea);
 ```  
 - select * from Product where Section = 'A' order by Name desc;  
-```
-SELECT Product(Section=A) DESC(Name) 
+```  
+SELECT Product(Section=A) DESC(Name);
 ```  
 - insert into Section(Name, Id) values('X', 'X');  
 ```  
-INSERT Section(Name=X Id=X)  
+INSERT Section(Name=X Id=X);  
 ```  
 - update Section set Name = 'X' where Id = 'X';  
 ```  
-UPDATE Section(Name=X Id=X)  
+UPDATE Section(Name=X Id=X);  
 ```  
 - delete from Product where Cost > 1 and Cost < 10;  
 ```  
-DELETE Product(Cost>1 Cost<10)  
+DELETE Product(Cost>1 Cost<10);  
 ```  
-- Find products which are most often bought together, and at least for 60 times.  
+- find products which are most often bought together, and at least for 60 times.  
 ```  
-TOP Marketbasket 60  
+TOP Marketbasket 60;  
 ```  
-- support = P(buy_egg U buy_bread)  
+- support = P(egg U bread)  
 ```  
-SUPP Marketbasket (egg) (bread)  
+SUPP Marketbasket (White Bread) (Eggs); 
 ```  
-- confidence = P(buy_egg | buy_bread)  
+- confidence = P(egg | bread)  
 ```  
-CONF Marketbasket (egg) (bread)  
+SUPP Marketbasket (White Bread) (Eggs); 
 ```

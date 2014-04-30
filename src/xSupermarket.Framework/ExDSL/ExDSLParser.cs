@@ -15,7 +15,7 @@ namespace xSupermarket.Framework.ExDSL
         {
             Tokens = new List<Token>();
             string formatInput;
-            formatInput = input.Trim().Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("(", " ( ").Replace(")", " ) ").Replace(">", " > ").Replace("<", " < ").Replace("=", " = ");
+            formatInput = input.Trim().Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("(", " ( ").Replace(")", " ) ").Replace(">", " > ").Replace("<", " < ").Replace("=", " = ").Replace(";", " ; ").Trim();
             while (formatInput.Contains("  "))
             {
                 formatInput = formatInput.Replace("  ", " ");

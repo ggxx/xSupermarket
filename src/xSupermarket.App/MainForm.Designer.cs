@@ -61,7 +61,7 @@
             this.textBoxOutput.Name = "textBoxOutput";
             this.textBoxOutput.ReadOnly = true;
             this.textBoxOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxOutput.Size = new System.Drawing.Size(1054, 572);
+            this.textBoxOutput.Size = new System.Drawing.Size(756, 399);
             this.textBoxOutput.TabIndex = 0;
             // 
             // textBoxInput
@@ -70,18 +70,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxInput.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxInput.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.textBoxInput.Location = new System.Drawing.Point(10, 592);
+            this.textBoxInput.Location = new System.Drawing.Point(10, 419);
             this.textBoxInput.Margin = new System.Windows.Forms.Padding(5);
             this.textBoxInput.Multiline = true;
             this.textBoxInput.Name = "textBoxInput";
-            this.textBoxInput.Size = new System.Drawing.Size(944, 100);
+            this.textBoxInput.Size = new System.Drawing.Size(646, 100);
             this.textBoxInput.TabIndex = 1;
-            this.textBoxInput.Text = "TOP Marketbasket 60";
+            this.textBoxInput.Text = "TOP Marketbasket 60;";
             // 
             // buttonExDSL
             // 
             this.buttonExDSL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonExDSL.Location = new System.Drawing.Point(964, 592);
+            this.buttonExDSL.Location = new System.Drawing.Point(666, 419);
             this.buttonExDSL.Margin = new System.Windows.Forms.Padding(5);
             this.buttonExDSL.Name = "buttonExDSL";
             this.buttonExDSL.Size = new System.Drawing.Size(100, 100);
@@ -99,7 +99,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1082, 735);
+            this.tabControl1.Size = new System.Drawing.Size(784, 562);
             this.tabControl1.TabIndex = 3;
             // 
             // tabPage1
@@ -111,7 +111,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(5);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(5);
-            this.tabPage1.Size = new System.Drawing.Size(1074, 702);
+            this.tabPage1.Size = new System.Drawing.Size(776, 529);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "ExDSL";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -129,7 +129,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(5);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(5);
-            this.tabPage2.Size = new System.Drawing.Size(1074, 702);
+            this.tabPage2.Size = new System.Drawing.Size(776, 529);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Database";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -137,7 +137,7 @@
             // buttonProduct
             // 
             this.buttonProduct.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonProduct.Location = new System.Drawing.Point(563, 592);
+            this.buttonProduct.Location = new System.Drawing.Point(563, 419);
             this.buttonProduct.Margin = new System.Windows.Forms.Padding(5);
             this.buttonProduct.Name = "buttonProduct";
             this.buttonProduct.Size = new System.Drawing.Size(100, 100);
@@ -149,7 +149,7 @@
             // buttonEmployee
             // 
             this.buttonEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonEmployee.Location = new System.Drawing.Point(453, 592);
+            this.buttonEmployee.Location = new System.Drawing.Point(453, 419);
             this.buttonEmployee.Margin = new System.Windows.Forms.Padding(5);
             this.buttonEmployee.Name = "buttonEmployee";
             this.buttonEmployee.Size = new System.Drawing.Size(100, 100);
@@ -161,7 +161,7 @@
             // buttonBasket
             // 
             this.buttonBasket.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonBasket.Location = new System.Drawing.Point(343, 592);
+            this.buttonBasket.Location = new System.Drawing.Point(343, 419);
             this.buttonBasket.Margin = new System.Windows.Forms.Padding(5);
             this.buttonBasket.Name = "buttonBasket";
             this.buttonBasket.Size = new System.Drawing.Size(100, 100);
@@ -173,7 +173,7 @@
             // buttonArea
             // 
             this.buttonArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonArea.Location = new System.Drawing.Point(233, 592);
+            this.buttonArea.Location = new System.Drawing.Point(233, 419);
             this.buttonArea.Margin = new System.Windows.Forms.Padding(5);
             this.buttonArea.Name = "buttonArea";
             this.buttonArea.Size = new System.Drawing.Size(100, 100);
@@ -185,7 +185,7 @@
             // buttonSection
             // 
             this.buttonSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSection.Location = new System.Drawing.Point(123, 592);
+            this.buttonSection.Location = new System.Drawing.Point(123, 419);
             this.buttonSection.Margin = new System.Windows.Forms.Padding(5);
             this.buttonSection.Name = "buttonSection";
             this.buttonSection.Size = new System.Drawing.Size(100, 100);
@@ -197,7 +197,7 @@
             // buttonCategory
             // 
             this.buttonCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonCategory.Location = new System.Drawing.Point(13, 592);
+            this.buttonCategory.Location = new System.Drawing.Point(13, 419);
             this.buttonCategory.Margin = new System.Windows.Forms.Padding(5);
             this.buttonCategory.Name = "buttonCategory";
             this.buttonCategory.Size = new System.Drawing.Size(100, 100);
@@ -221,14 +221,14 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1051, 572);
+            this.dataGridView1.Size = new System.Drawing.Size(753, 399);
             this.dataGridView1.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1082, 735);
+            this.ClientSize = new System.Drawing.Size(784, 562);
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(5);

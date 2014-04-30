@@ -10,12 +10,14 @@ namespace xSupermarket.Framework.ExDSL
         private Combinator matchSuppBlock;
         private Combinator matchTabBlock;
         private Combinator matchNameBlock;
+        private Combinator matchEndBlock;
 
-        public SuppDsl(Combinator matchSuppBlock, Combinator matchTabBlock, Combinator matchNameBlock)
+        public SuppDsl(Combinator matchSuppBlock, Combinator matchTabBlock, Combinator matchNameBlock, Combinator matchEndBlock)
         {
             this.matchSuppBlock = matchSuppBlock;
             this.matchTabBlock = matchTabBlock;
             this.matchNameBlock = matchNameBlock;
+            this.matchEndBlock = matchEndBlock;
         }
 
         public CombinatorResult Recognizer(CombinatorResult inbound)
@@ -38,6 +40,11 @@ namespace xSupermarket.Framework.ExDSL
             {
                 matchValues.Add(result.MatchValue);
                 result = matchNameBlock.Recognizer(result);
+            }
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                result = matchEndBlock.Recognizer(result);
             }
             if (result.MatchStatus)
             {

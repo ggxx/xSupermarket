@@ -7,7 +7,7 @@ using xSupermarket.Framework.Repo;
 
 namespace xSupermarket.Framework.DSL
 {
-    public class SuppObject
+    public class SuppObject : DslObject
     {
         public SuppObject()
         {

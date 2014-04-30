@@ -23,6 +23,7 @@ namespace xSupermarket.Framework.ExDSL
         const string KW_GROUP = "GROUP";
         const string KW_ASC = "ASC";
         const string KW_DESC = "DESC";
+        const string KW_END = ";";
 
         public Token(string value)
         {
@@ -79,6 +80,8 @@ namespace xSupermarket.Framework.ExDSL
                     return TokenType.TT_ASC;
                 case KW_DESC:
                     return TokenType.TT_DESC;
+                case KW_END:
+                    return TokenType.TT_END;
                 default:
                     return TokenType.TT_IDENTIFIER;
             }

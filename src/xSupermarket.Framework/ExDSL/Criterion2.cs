@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace xSupermarket.Framework.ExDSL
 {
-    public class Criterion : Combinator
+    public class Criterion2 : Combinator
     {
-        private Combinator matchOperation;
         private Combinator matchIdentifierKeyword1;
+        private Combinator matchEqualKeyword;
         private Combinator matchIdentifierKeyword2;
 
-
-        public Criterion(Combinator matchIdentifierKeyword1, Combinator matchOperation, Combinator matchIdentifierKeyword2)
+        public Criterion2(Combinator matchIdentifierKeyword1, Combinator matchEqualKeyword, Combinator matchIdentifierKeyword2)
         {
             this.matchIdentifierKeyword1 = matchIdentifierKeyword1;
-            this.matchOperation = matchOperation;
+            this.matchEqualKeyword = matchEqualKeyword;
             this.matchIdentifierKeyword2 = matchIdentifierKeyword2;
         }
 
@@ -31,7 +32,7 @@ namespace xSupermarket.Framework.ExDSL
             if (result.MatchStatus)
             {
                 matchValues.Add(result.MatchValue);
-                result = matchOperation.Recognizer(result);
+                result = matchEqualKeyword.Recognizer(result);
             }
             if (result.MatchStatus)
             {
@@ -54,8 +55,8 @@ namespace xSupermarket.Framework.ExDSL
         public void Action(params MatchValue[] matchValues)
         {
             DSL.ICriterion ic = new DSL.Criterion(matchValues[0].MatchString, DSL.Criterion.ConvertToOperator(matchValues[1].MatchString), matchValues[2].MatchString);
-            ExObject.SelectObject.Criterions.Add(ic);
-            ExObject.DeleteObject.Criterions.Add(ic);
+            ExObject.InsertObject.Criterions.Add(ic);
+            ExObject.UpdateObject.Criterions.Add(ic);
         }
     }
 }

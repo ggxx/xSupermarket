@@ -10,12 +10,14 @@ namespace xSupermarket.Framework.ExDSL
         private Combinator matchDeleteBlock;
         private Combinator matchTabBlock;
         private Combinator matchCriterionBlock;
+        private Combinator matchEndBlock;
 
-        public DeleteDsl(Combinator matchDeleteBlock, Combinator matchTabBlock, Combinator matchCriterionBlock)
+        public DeleteDsl(Combinator matchDeleteBlock, Combinator matchTabBlock, Combinator matchCriterionBlock, Combinator matchEndBlock)
         {
             this.matchDeleteBlock = matchDeleteBlock;
             this.matchTabBlock = matchTabBlock;
             this.matchCriterionBlock = matchCriterionBlock;
+            this.matchEndBlock = matchEndBlock;
         }
 
         public CombinatorResult Recognizer(CombinatorResult inbound)
@@ -39,6 +41,11 @@ namespace xSupermarket.Framework.ExDSL
             {
                 matchValues.Add(result.MatchValue);
                 result = matchCriterionBlock.Recognizer(result);
+            }
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                result = matchEndBlock.Recognizer(result);
             }
             if (result.MatchStatus)
             {

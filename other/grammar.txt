@@ -21,7 +21,7 @@ selectDsl : selectBlock tabBlock criterionBlock groupBlock orderBlock endBlock
 
 
 equal : =
-criterion : IDENTIFIER equal IDENTIFIER
+criterion2 : IDENTIFIER equal IDENTIFIER
 criterionList2 : (criterion2)+ 
 criterionBlock2 : LEFT criterionList2 RIGHT
 updateBlock : UPDATE
@@ -56,3 +56,4 @@ DELETE TAB(Cost>1 Cost<100);
 TOP TAB 5;
 SUPP TAB (XX) (YY);
 CONF TAB (XX) (YY);
+

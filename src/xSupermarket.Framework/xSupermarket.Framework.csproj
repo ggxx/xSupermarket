@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExDSL\Criterion2.cs" />
+    <Compile Include="ExDSL\CriterionBlock2.cs" />
     <Compile Include="DataMining\Apriori.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -68,8 +70,10 @@
     <Compile Include="ExDSL\CriterionBlock.cs" />
     <Compile Include="ExDSL\CriterionContext.cs" />
     <Compile Include="ExDSL\CriterionList.cs" />
+    <Compile Include="ExDSL\CriterionList2.cs" />
     <Compile Include="ExDSL\DeleteBlock.cs" />
     <Compile Include="ExDSL\DeleteDsl.cs" />
+    <Compile Include="ExDSL\EndBlock.cs" />
     <Compile Include="ExDSL\ExDSLGenerator.cs" />
     <Compile Include="ExDSL\ExDSLParser.cs" />
     <Compile Include="ExDSL\ExObject.cs" />

@@ -5,20 +5,21 @@ namespace xSupermarket.Framework.ExDSL
 {
     public class SelectDsl : Combinator
     {
-        //private SelectResult selectResult;
         private Combinator matchSelectBlock;
         private Combinator matchTabBlock;
         private Combinator matchCriterionBlock;
         private Combinator matchGroupBlock;
         private Combinator matchOrderBlock;
+        private Combinator matchEndBlock;
 
-        public SelectDsl(Combinator matchSelectBlock, Combinator matchTabBlock, Combinator matchCriterionBlock, Combinator matchGroupBlock, Combinator matchOrderBlock)
+        public SelectDsl(Combinator matchSelectBlock, Combinator matchTabBlock, Combinator matchCriterionBlock, Combinator matchGroupBlock, Combinator matchOrderBlock, Combinator matchEndBlock)
         {
             this.matchSelectBlock = matchSelectBlock;
             this.matchTabBlock = matchTabBlock;
             this.matchCriterionBlock = matchCriterionBlock;
             this.matchGroupBlock = matchGroupBlock;
             this.matchOrderBlock = matchOrderBlock;
+            this.matchEndBlock = matchEndBlock;
         }
 
         public CombinatorResult Recognizer(CombinatorResult inbound)
@@ -52,6 +53,11 @@ namespace xSupermarket.Framework.ExDSL
             {
                 matchValues.Add(result.MatchValue);
                 result = matchOrderBlock.Recognizer(result);
+            }
+            if (result.MatchStatus)
+            {
+                matchValues.Add(result.MatchValue);
+                result = matchEndBlock.Recognizer(result);
             }
             if (result.MatchStatus)
             {
