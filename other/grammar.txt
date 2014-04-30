@@ -49,7 +49,7 @@ confBlock : CONF
 confDsl : confBlock tabBlock nameBlock endBlock
 
 
-SELECT TAB(Field=XX) GROUP(Section) Asc(Section);
+SELECT TAB(Field=XX) GROUP(Section) ASC(Section);
 INSERT TAB(Name=E Id=E);
 UPDATE TAB(Name=E Id=F);
 DELETE TAB(Cost>1 Cost<100);
